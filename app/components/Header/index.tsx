@@ -14,7 +14,7 @@ interface HeaderProps {
 
 export default function Header({ type = "main", title = "숨결", hasIcons = true }: HeaderProps) {
   return (
-    <header className="w-full py-[10px] px-[16px] fixed top-0 left-0 right-0  h-15 bg-background z-50">
+    <header className="w-full py-[10px] px-[16px] bg-background">
       <div className="container flex justify-between items-center">
         {/* Left Section */}
         <div className="flex items-center gap-3">

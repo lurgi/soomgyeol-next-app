@@ -22,7 +22,6 @@ const meta: Meta<typeof Carousel> = {
 export default meta;
 type Story = StoryObj<typeof Carousel>;
 
-// 샘플 데이터
 const samplePosts = [
   {
     id: 1,
@@ -66,43 +65,44 @@ const samplePosts = [
   },
 ];
 
-// 기본 캐러셀
 export const Default: Story = {
   render: () => (
     <div className="p-4">
-      <Carousel>
-        <Carousel.Header>워크샵 / 클래스</Carousel.Header>
-        <Carousel.Body posts={samplePosts} />
-      </Carousel>
+      <div className="mb-3">
+        <h3 className="text-xl font-medium">워크샵 / 클래스</h3>
+      </div>
+      <Carousel posts={samplePosts} />
     </div>
   ),
 };
 
-// 더보기 버튼 없는 캐러셀
-export const WithoutMoreButton: Story = {
+export const FewPosts: Story = {
   render: () => (
     <div className="p-4">
-      <Carousel>
-        <Carousel.Header showMoreButton={false}>인기 클래스</Carousel.Header>
-        <Carousel.Body posts={samplePosts.slice(0, 3)} />
-      </Carousel>
+      <div className="mb-3">
+        <h3 className="text-xl font-medium">인기 클래스</h3>
+      </div>
+      <Carousel posts={samplePosts.slice(0, 3)} />
     </div>
   ),
 };
 
-// 여러 캐러셀 스택
 export const MultipleCarousels: Story = {
   render: () => (
     <div className="p-4 space-y-8">
-      <Carousel>
-        <Carousel.Header>워크샵 / 클래스</Carousel.Header>
-        <Carousel.Body posts={samplePosts} />
-      </Carousel>
+      <div>
+        <div className="mb-3">
+          <h3 className="text-xl font-medium">워크샵 / 클래스</h3>
+        </div>
+        <Carousel posts={samplePosts} />
+      </div>
 
-      <Carousel>
-        <Carousel.Header>추천 클래스</Carousel.Header>
-        <Carousel.Body posts={samplePosts.slice().reverse()} />
-      </Carousel>
+      <div>
+        <div className="mb-3">
+          <h3 className="text-xl font-medium">추천 클래스</h3>
+        </div>
+        <Carousel posts={samplePosts.slice().reverse()} />
+      </div>
     </div>
   ),
 };

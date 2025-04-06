@@ -1,7 +1,3 @@
-"use client";
-
-import React from "react";
-
 type FontWeight = "regular" | "medium" | "bold";
 
 interface CaptionProps {

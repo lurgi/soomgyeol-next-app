@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "../Header";
 import Navbar from "../Navbar";
 import PullToRefresh from "./PullToRefresh";
+import { NavItemType } from "@/types/navigation";
 
 interface MobileLayoutProps {
   children: ReactNode;
@@ -32,7 +33,7 @@ const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }
 
 const MobileLayoutMain = ({ children, className = "", onRefresh }: MobileLayoutMainProps) => {
   return (
-    <main className={`relative pt-[70px] pb-[100px] px-4 overflow-y-auto ${className}`}>
+    <main className={`relative pt-[70px] pb-[100px] overflow-y-auto ${className}`}>
       <PullToRefresh onRefresh={onRefresh}>{children}</PullToRefresh>
     </main>
   );

@@ -1,8 +1,4 @@
-'use client';
-
-import React from 'react';
-
-type FontWeight = 'regular' | 'medium' | 'bold';
+type FontWeight = "regular" | "medium" | "bold";
 
 interface HeadingProps {
   children: React.ReactNode;
@@ -13,8 +9,8 @@ interface HeadingProps {
 // Heading 컴포넌트의 기본 구현
 const HeadingRoot = ({
   children,
-  weight = 'regular',
-  className = '',
+  weight = "regular",
+  className = "",
   ...props
 }: HeadingProps & React.HTMLAttributes<HTMLHeadingElement>) => {
   return (
@@ -27,16 +23,12 @@ const HeadingRoot = ({
 // Heading1 컴포넌트
 const Heading1 = ({
   children,
-  weight = 'regular',
-  className = '',
+  weight = "regular",
+  className = "",
   ...props
 }: HeadingProps & React.HTMLAttributes<HTMLHeadingElement>) => {
   return (
-    <HeadingRoot
-      weight={weight}
-      className={`text-[1.375rem] leading-[130%] ${className}`}
-      {...props}
-    >
+    <HeadingRoot weight={weight} className={`text-[1.375rem] leading-[130%] ${className}`} {...props}>
       {children}
     </HeadingRoot>
   );
@@ -45,16 +37,12 @@ const Heading1 = ({
 // Heading2 컴포넌트
 const Heading2 = ({
   children,
-  weight = 'regular',
-  className = '',
+  weight = "regular",
+  className = "",
   ...props
 }: HeadingProps & React.HTMLAttributes<HTMLHeadingElement>) => {
   return (
-    <HeadingRoot
-      weight={weight}
-      className={`text-[1.25rem] leading-[130%] ${className}`}
-      {...props}
-    >
+    <HeadingRoot weight={weight} className={`text-[1.25rem] leading-[130%] ${className}`} {...props}>
       {children}
     </HeadingRoot>
   );
@@ -63,16 +51,12 @@ const Heading2 = ({
 // Heading3 컴포넌트
 const Heading3 = ({
   children,
-  weight = 'regular',
-  className = '',
+  weight = "regular",
+  className = "",
   ...props
 }: HeadingProps & React.HTMLAttributes<HTMLHeadingElement>) => {
   return (
-    <HeadingRoot
-      weight={weight}
-      className={`text-[1.125rem] leading-[130%] ${className}`}
-      {...props}
-    >
+    <HeadingRoot weight={weight} className={`text-[1.125rem] leading-[130%] ${className}`} {...props}>
       {children}
     </HeadingRoot>
   );

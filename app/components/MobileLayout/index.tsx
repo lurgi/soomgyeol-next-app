@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, ReactNode } from "react";
+import React, { useState, useRef, ReactNode, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "../Header";
 import Navbar from "../Navbar";
@@ -23,7 +23,7 @@ interface MobileLayoutMainProps {
 }
 
 interface MobileLayoutNavbarProps {
-  activeItem?: "home" | "document" | "edit" | "profile";
+  activeItem?: NavItemType;
 }
 
 const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }: MobileLayoutHeaderProps) => {
@@ -33,9 +33,7 @@ const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }
 const MobileLayoutMain = ({ children, className = "", onRefresh }: MobileLayoutMainProps) => {
   return (
     <main className={`relative pt-[70px] pb-[100px] px-4 overflow-y-auto ${className}`}>
-      <PullToRefresh onRefresh={onRefresh}>
-        {children}
-      </PullToRefresh>
+      <PullToRefresh onRefresh={onRefresh}>{children}</PullToRefresh>
     </main>
   );
 };
@@ -54,25 +52,35 @@ const MobileLayout = ({ children }: MobileLayoutProps) => {
     container: scrollContainerRef,
   });
 
-  const headerY = useTransform(scrollY, (latest: number) => {
-    if (!ticking.current) {
-      ticking.current = true;
+  useEffect(() => {
+    const handleScrollUpdate = () => {
+      if (!scrollContainerRef.current || !ticking.current) {
+        ticking.current = true;
 
-      requestAnimationFrame(() => {
-        const currentScrollY = latest;
-        const threshold = 10;
+        window.requestAnimationFrame(() => {
+          const currentScrollY = scrollY.get();
+          const threshold = 10;
 
-        if (currentScrollY > lastScrollY.current + threshold) {
-          setScrollDirection("down");
-        } else if (currentScrollY < lastScrollY.current - threshold || currentScrollY <= 0) {
-          setScrollDirection("up");
-        }
+          if (currentScrollY > lastScrollY.current + threshold) {
+            setScrollDirection("down");
+          } else if (currentScrollY < lastScrollY.current - threshold || currentScrollY <= 0) {
+            setScrollDirection("up");
+          }
 
-        lastScrollY.current = currentScrollY;
-        ticking.current = false;
-      });
-    }
+          lastScrollY.current = currentScrollY;
+          ticking.current = false;
+        });
+      }
+    };
 
+    const unsubscribe = scrollY.on("change", handleScrollUpdate);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [scrollY]);
+
+  const headerY = useTransform(scrollY, () => {
     return scrollDirection === "down" ? -100 : 0;
   });
 
@@ -114,7 +122,6 @@ const MobileLayout = ({ children }: MobileLayoutProps) => {
   );
 };
 
-// 합성 컴포넌트 패턴으로 MobileLayout 컴포넌트 구성
 export default Object.assign(MobileLayout, {
   Header: MobileLayoutHeader,
   Main: MobileLayoutMain,

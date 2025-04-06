@@ -32,7 +32,7 @@ const Carousel = ({ posts }: CarouselProps) => {
           margin-top: 8px;
           bottom: 0 !important;
           text-align: right !important;
-          padding-right: 0px;
+          padding-right: 16px;
         }
 
         .swiper-pagination-bullet {
@@ -81,6 +81,8 @@ const Carousel = ({ posts }: CarouselProps) => {
         spaceBetween={10}
         slidesPerView={"auto"}
         centeredSlides={false}
+        slidesOffsetBefore={16}
+        slidesOffsetAfter={16}
         pagination={{
           clickable: true,
           dynamicBullets: false,

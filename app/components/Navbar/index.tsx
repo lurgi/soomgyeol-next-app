@@ -32,7 +32,7 @@ const NavItem = ({ icon: Icon, type, label, isActive }: NavItemProps) => {
 export default function Navbar({ activeItem }: NavbarProps) {
   const navItems: { type: NavItemType; icon: LucideIcon; label: string }[] = [
     { type: NAV_ITEMS.HOME, icon: Home, label: "홈" },
-    { type: NAV_ITEMS.POST, icon: FileText, label: "문서" },
+    { type: NAV_ITEMS.POSTS, icon: FileText, label: "문서" },
     { type: NAV_ITEMS.EDIT, icon: Edit, label: "편집" },
     { type: NAV_ITEMS.PROFILE, icon: User, label: "프로필" },
   ];

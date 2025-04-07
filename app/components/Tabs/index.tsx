@@ -22,7 +22,6 @@ const useTabsContext = () => {
 interface TabsProps {
   defaultTab?: string;
   children: ReactNode;
-  className?: string;
 }
 
 interface TabProps {
@@ -37,7 +36,7 @@ interface ContentProps {
   className?: string;
 }
 
-const Tabs = ({ defaultTab, children, className }: TabsProps) => {
+const Tabs = ({ defaultTab, children }: TabsProps) => {
   const [activeTab, setActiveTab] = useState<string>(defaultTab || "");
 
   const tabs: React.ReactElement[] = [];
@@ -56,15 +55,7 @@ const Tabs = ({ defaultTab, children, className }: TabsProps) => {
     }
   });
 
-  return (
-    <TabsContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className={cn("w-full", className)}>
-        {tabs.length > 0 && <div className="flex border-b px-4 border-slate-300 justify-between mb-4">{tabs}</div>}
-        {otherElements}
-        {contents}
-      </div>
-    </TabsContext.Provider>
-  );
+  return <TabsContext.Provider value={{ activeTab, setActiveTab }}>{children}</TabsContext.Provider>;
 };
 
 const Tab = ({ id, children, className }: TabProps) => {
@@ -75,8 +66,8 @@ const Tab = ({ id, children, className }: TabProps) => {
     <button
       onClick={() => setActiveTab(id)}
       className={cn(
-        "py-1.5 transition-colors",
-        isActive ? "border-1 border-b-2 border-slate-800 text-slate-800" : "text-slate-600 hover:text-gray-700",
+        "py-1.5 transition-colors w-full",
+        isActive ? "border-b-2 border-slate-800 text-slate-800" : "text-slate-600 hover:text-gray-700",
         className
       )}
       aria-selected={isActive}

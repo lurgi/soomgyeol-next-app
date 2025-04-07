@@ -15,8 +15,8 @@ export default function Layout({
 
   if (pathname.includes("/home")) {
     activeItem = NAV_ITEMS.HOME;
-  } else if (pathname.includes("/post")) {
-    activeItem = NAV_ITEMS.POST;
+  } else if (pathname.includes("/posts")) {
+    activeItem = NAV_ITEMS.POSTS;
   } else if (pathname.includes("/profile")) {
     activeItem = NAV_ITEMS.PROFILE;
   }

@@ -144,10 +144,10 @@ const Metadata = (props: MetadataProps) => {
               size={24}
               className={cn(
                 "transition-colors",
-                props.isLiked ? "text-red-500 fill-red-500" : "text-slate-500 hover:text-red-300"
+                props.isLiked ? "text-red-400 fill-red-400" : "text-slate-500 hover:text-red-300"
               )}
             />
-            <Body.B1 className={cn(props.isLiked ? "text-red-500" : "text-slate-600")}>{props.likeCount || 0}</Body.B1>
+            <Body.B1 className="text-slate-600">{props.likeCount || 0}</Body.B1>
           </button>
         </div>
 

@@ -71,7 +71,12 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
 
       if (selectedIndex >= 0) {
         setTimeout(() => {
-          swiper.slideTo(selectedIndex, 500);
+          try {
+            swiper.slideTo(selectedIndex, 500);
+            console.log("Sliding to index:", selectedIndex);
+          } catch (error) {
+            console.error("Error sliding to index:", error);
+          }
         }, 50);
       }
     }
@@ -79,33 +84,33 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
 
   return (
     <div className={cn("relative w-full", className)} ref={containerRef}>
-      <div className="relative">
-        {!expanded ? (
-          <div className="relative pr-10 py-1 px-1 border-1 border-white">
-            <Swiper
-              modules={[FreeMode, Navigation]}
-              spaceBetween={8}
-              slidesOffsetBefore={4}
-              slidesPerView="auto"
-              freeMode={{
-                enabled: true,
-                minimumVelocity: 0.02,
-                momentum: true,
-              }}
-              className="w-full"
-              onSwiper={(swiper) => {
-                swiperRef.current = swiper;
-              }}
-            >
-              {tags.map((tag) => (
-                <SwiperSlide key={tag} className="!w-auto">
-                  <LocationTag label={tag} isSelected={selectedTag === tag} onClick={() => handleTagClick(tag)} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        ) : (
-          <div className="relative pr-10 pl-2 py-1 bg-white rounded-md border border-gray-200 flex flex-wrap gap-2">
+      <div className="pr-10">
+        <div className={cn("pr-10 px-1", expanded ? "opacity-0 h-0 overflow-hidden" : "")}>
+          <Swiper
+            modules={[FreeMode, Navigation]}
+            spaceBetween={8}
+            slidesOffsetBefore={4}
+            slidesPerView="auto"
+            freeMode={{
+              enabled: true,
+              minimumVelocity: 0.02,
+              momentum: true,
+            }}
+            className="w-full"
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+          >
+            {tags.map((tag) => (
+              <SwiperSlide key={tag} className="!w-auto">
+                <LocationTag label={tag} isSelected={selectedTag === tag} onClick={() => handleTagClick(tag)} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        {expanded && (
+          <div className="pr-10 px-2 bg-white flex flex-wrap gap-2">
             {tags.map((tag) => (
               <LocationTag key={tag} label={tag} isSelected={selectedTag === tag} onClick={() => handleTagClick(tag)} />
             ))}
@@ -121,7 +126,7 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
           title={expanded ? "스와이퍼 보기로 전환" : "리스트 보기로 전환"}
         >
           <ChevronDown
-            className={cn("w-6 h-6 transition-transform duration-300", expanded ? "transform rotate-180" : "")}
+            className={cn("w-6 h-6 transition-transform duration-500", expanded ? "transform rotate-180" : "")}
           />
         </button>
       )}

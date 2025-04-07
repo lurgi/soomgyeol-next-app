@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { MapPin, MessageCircle, Heart, Eye, Calendar, MoreHorizontal, CalendarClock } from "lucide-react";
 import { Body, Heading } from "../font";
 import { formatDateToYYMMDD, formatTimeToKorean } from "@/app/utils/dateFormat";
+import Avatar from "../Avatar";
 
 interface PostDetailProps {
   className?: string;
@@ -71,15 +72,7 @@ const Content = ({ title, description, imageUrl, imageAlt, author }: ContentProp
 
       <div className="flex justify-between px-4">
         <div className="flex items-center gap-3">
-          {author.avatar ? (
-            <div className="relative w-8 h-8 rounded-full overflow-hidden">
-              <Image src={author.avatar} alt={`${author.name}의 프로필 이미지`} fill className="object-cover" />
-            </div>
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
-              <span className="text-slate-600 text-sm">{author.name.charAt(0)}</span>
-            </div>
-          )}
+          <Avatar name={author.name} avatar={author.avatar} size={36} />
           <Heading.H3 className="text-slate-800" weight="medium">
             @{author.name}
           </Heading.H3>

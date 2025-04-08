@@ -24,7 +24,6 @@ type Story = StoryObj<typeof Tabs>;
 export const Default: Story = {
   args: {
     defaultTab: "tab1",
-    className: "w-full",
   },
   render: (args) => (
     <Tabs {...args}>
@@ -59,7 +58,6 @@ export const Default: Story = {
 export const CustomStyling: Story = {
   args: {
     defaultTab: "tab1",
-    className: "w-full max-w-md",
   },
   render: (args) => (
     <Tabs {...args}>
@@ -96,7 +94,6 @@ export const CustomStyling: Story = {
 export const UnderlinedTabs: Story = {
   args: {
     defaultTab: "tab1",
-    className: "w-full max-w-md",
   },
   render: (args) => (
     <Tabs {...args}>

@@ -42,7 +42,7 @@ export const Home: Story = {
 // Document tab active
 export const Document: Story = {
   args: {
-    activeItem: "post",
+    activeItem: "posts",
   },
   decorators: [
     (Story) => (

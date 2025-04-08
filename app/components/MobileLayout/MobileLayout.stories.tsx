@@ -48,7 +48,7 @@ export const DetailPage: Story = {
           </p>
         ))}
       </MobileLayout.Main>
-      <MobileLayout.Navbar activeItem="document" />
+      <MobileLayout.Navbar activeItem="posts" />
     </MobileLayout>
   ),
 };

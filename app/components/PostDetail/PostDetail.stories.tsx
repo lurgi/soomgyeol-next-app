@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import PostDetail from "./index";
 import { useState } from "react";
+import { Edit3, RotateCw, Trash2 } from "lucide-react";
 
 const meta: Meta<typeof PostDetail> = {
   title: "Components/PostDetail",
@@ -45,6 +46,11 @@ export const Default: Story = {
             description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
             imageUrl="/yoga2.png"
             author={sampleAuthor}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="range"
@@ -80,6 +86,11 @@ export const DateRangeWithMinutes: Story = {
             description="직장인을 위한 저녁 요가 클래스입니다. 6주 과정으로 진행됩니다."
             imageUrl="/yoga2.png"
             author={sampleAuthor}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="range"
@@ -116,6 +127,11 @@ export const SingleDateEvent: Story = {
             description="명상을 통한 마음 챙김과 스트레스 해소 방법을 배워봅니다."
             imageUrl="/yoga2.png"
             author={sampleAuthor}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="single"
@@ -150,6 +166,11 @@ export const SingleDateEventWithMinutes: Story = {
             description="초보자도 쉽게 따라할 수 있는 기초 요가 클래스입니다. 편안한 복장으로 오세요."
             imageUrl="/yoga2.png"
             author={sampleAuthor}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="single"
@@ -186,6 +207,11 @@ export const NoDatePost: Story = {
             author={{
               name: "요가마스터",
             }}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="none"
@@ -212,6 +238,11 @@ export const ContentOnly: Story = {
             description="요가를 처음 시작하는 분들을 위한 유용한 조언들"
             imageUrl="/yoga2.png"
             author={sampleAuthor}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
         </PostDetail>
       </div>
@@ -265,6 +296,11 @@ export const NoAuthor: Story = {
             description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
             imageUrl="/yoga2.png"
             author={sampleAuthor}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="range"
@@ -302,6 +338,11 @@ export const AuthorWithoutAvatar: Story = {
             author={{
               name: "요가마스터",
             }}
+            dropdownItems={[
+              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+            ]}
           />
           <PostDetail.Metadata
             type="range"

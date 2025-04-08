@@ -18,7 +18,7 @@ interface NavItemProps {
 
 const NavItem = ({ icon: Icon, type, label, isActive }: NavItemProps) => {
   return (
-    <Link className="w-1/4 flex flex-col items-center pt-[18px] pb-[34px]" href={"/" + type.toLowerCase()}>
+    <Link className="w-1/4 flex flex-col items-center py-4.5" href={"/" + type.toLowerCase()}>
       <button
         className={`flex flex-col items-center justify-center ${isActive ? "text-primary" : "text-muted-foreground"}`}
         aria-label={label}
@@ -38,7 +38,7 @@ export default function Navbar({ activeItem }: NavbarProps) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-slate-100 z-50">
+    <nav className="w-full bg-slate-100">
       <div className="flex justify-between items-center">
         {navItems.map((item) => (
           <NavItem

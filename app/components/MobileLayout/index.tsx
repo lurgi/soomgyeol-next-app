@@ -4,18 +4,22 @@ import React, { useState, useRef, ReactNode, useEffect, createContext, useContex
 import { motion, useScroll, useTransform } from "framer-motion";
 import { createPortal } from "react-dom";
 import Header from "../Header";
-import Navbar from "../Navbar";
 import PullToRefresh from "./PullToRefresh";
 import { NavItemType } from "@/types/navigation";
+import Navbar from "../Navbar";
 
 interface MobileLayoutContextType {
   hasSubHeader: boolean;
   setHasSubHeader: (value: boolean) => void;
+  hasBottomOverlay: boolean;
+  setHasBottomOverlay: (value: boolean) => void;
 }
 
 const MobileLayoutContext = createContext<MobileLayoutContextType>({
   hasSubHeader: false,
   setHasSubHeader: () => {},
+  hasBottomOverlay: false,
+  setHasBottomOverlay: () => {},
 });
 
 const useMobileLayout = () => useContext(MobileLayoutContext);
@@ -44,15 +48,27 @@ interface MobileLayoutSubHeaderProps {
   children: ReactNode;
 }
 
+interface MobileLayoutBottomOverlayProps {
+  children: ReactNode;
+}
+
 const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }: MobileLayoutHeaderProps) => {
-  return <Header type={type} title={title} hasIcons={hasIcons} />;
+  return (
+    <div className="pt-[var(--safe-area-top)]">
+      <Header type={type} title={title} hasIcons={hasIcons} />
+    </div>
+  );
 };
 
 const MobileLayoutMain = ({ children, className = "", onRefresh }: MobileLayoutMainProps) => {
   const { hasSubHeader } = useMobileLayout();
 
   return (
-    <main className={`relative ${hasSubHeader ? "pt-[100px]" : "pt-[70px]"} pb-[100px] overflow-y-auto ${className}`}>
+    <main
+      className={`relative ${
+        hasSubHeader ? "pt-[100px]" : "pt-[70px]"
+      } pb-[calc(100px+var(--safe-area-bottom))] overflow-y-auto ${className}`}
+    >
       <PullToRefresh onRefresh={onRefresh}>{children}</PullToRefresh>
     </main>
   );
@@ -87,10 +103,35 @@ const MobileLayoutSubHeader = ({ children }: MobileLayoutSubHeaderProps) => {
   );
 };
 
+const MobileLayoutBottomOverlay = ({ children }: MobileLayoutBottomOverlayProps) => {
+  const [mounted, setMounted] = useState(false);
+  const { setHasBottomOverlay } = useMobileLayout();
+
+  useEffect(() => {
+    setMounted(true);
+    setHasBottomOverlay(true);
+    return () => {
+      setMounted(false);
+      setHasBottomOverlay(false);
+    };
+  }, [setHasBottomOverlay]);
+
+  if (!mounted) return null;
+
+  const portalTarget = document.getElementById("mobile-layout-bottom-portal");
+  if (!portalTarget) return null;
+
+  return createPortal(
+    <div className="fixed bottom-0 left-0 right-0 w-full z-50 bg-white pb-[var(--safe-area-bottom)]">{children}</div>,
+    portalTarget
+  );
+};
+
 const MobileLayout = ({ children }: MobileLayoutProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollDirection, setScrollDirection] = useState<"up" | "down" | null>(null);
   const [hasSubHeader, setHasSubHeader] = useState(false);
+  const [hasBottomOverlay, setHasBottomOverlay] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -131,8 +172,8 @@ const MobileLayout = ({ children }: MobileLayoutProps) => {
   });
 
   return (
-    <MobileLayoutContext.Provider value={{ hasSubHeader, setHasSubHeader }}>
-      <div className="min-h-screen flex flex-col h-screen overflow-hidden bg-background">
+    <MobileLayoutContext.Provider value={{ hasSubHeader, setHasSubHeader, hasBottomOverlay, setHasBottomOverlay }}>
+      <div className="min-h-screen flex flex-col h-screen overflow-hidden bg-background relative">
         <motion.div
           className="fixed top-0 left-0 right-0 w-full z-50 will-change-transform"
           style={{
@@ -162,7 +203,7 @@ const MobileLayout = ({ children }: MobileLayoutProps) => {
           })}
         </div>
 
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 pb-[var(--safe-area-bottom)]">
           {React.Children.map(children, (child) => {
             if (React.isValidElement(child) && child.type === MobileLayoutNavbar) {
               return child;
@@ -171,6 +212,8 @@ const MobileLayout = ({ children }: MobileLayoutProps) => {
           })}
         </div>
       </div>
+
+      <div id="mobile-layout-bottom-portal"></div>
     </MobileLayoutContext.Provider>
   );
 };
@@ -180,4 +223,5 @@ export default Object.assign(MobileLayout, {
   Main: MobileLayoutMain,
   Navbar: MobileLayoutNavbar,
   SubHeader: MobileLayoutSubHeader,
+  BottomOverlay: MobileLayoutBottomOverlay,
 });

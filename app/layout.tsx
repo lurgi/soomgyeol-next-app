@@ -11,6 +11,7 @@ const notoSansKr = Noto_Sans_KR({
 export const metadata: Metadata = {
   title: "숨결",
   description: "요가로 이어지는 사람들,\n숨결로 연결되는 우리",
+  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
 };
 
 export default function RootLayout({

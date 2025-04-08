@@ -70,7 +70,7 @@ const Content = ({ title, description, imageUrl, imageAlt, author }: ContentProp
         <Image src={imageUrl} alt={imageAlt || title} fill className="object-cover" />
       </div>
 
-      <div className="flex justify-between px-4">
+      <div className="flex justify-between px-6">
         <div className="flex items-center gap-3">
           <Avatar name={author.name} avatar={author.avatar} size={36} />
           <Heading.H3 className="text-slate-800" weight="medium">
@@ -81,12 +81,12 @@ const Content = ({ title, description, imageUrl, imageAlt, author }: ContentProp
         <MoreHorizontal size={24} className="text-slate-800" />
       </div>
 
-      <div className="flex flex-col gap-2 px-4">
+      <div className="flex flex-col gap-2 px-6">
         <Heading.H1 weight="medium" className="text-slate-800">
           {title}
         </Heading.H1>
 
-        <Body.B1 className="text-slate-600">{description}</Body.B1>
+        <Body.B1 className="text-slate-800">{description}</Body.B1>
       </div>
     </div>
   );
@@ -94,7 +94,7 @@ const Content = ({ title, description, imageUrl, imageAlt, author }: ContentProp
 
 const Metadata = (props: MetadataProps) => {
   return (
-    <div className="flex flex-col gap-5 py-4 px-4">
+    <div className="flex flex-col gap-5 px-6">
       {props.type !== "none" && (
         <div className="flex flex-col gap-3">
           {props.type === "range" && (

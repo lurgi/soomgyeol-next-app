@@ -117,7 +117,7 @@ export default function Home() {
 
       <div className="flex flex-col gap-4">
         <SubHeader href="/posts?type=free">자유 게시판</SubHeader>
-        <div className="flex flex-col px-4 gap-4">
+        <div className="flex flex-col px-6 gap-4">
           {sampleFreePosts.map((post) => (
             <PostLightPreview key={post.id}>
               <PostLightPreview.Content
@@ -135,7 +135,7 @@ export default function Home() {
             </PostLightPreview>
           ))}
         </div>
-        <div className="px-4 w-full">
+        <div className="px-6 w-full">
           <Link href="/posts?type=free" className="w-full">
             <Button className="w-full flex items-center justify-center gap-1 bg-blue-100 text-slate-800 px-2 py-1">
               <Body.B1>더보기</Body.B1>
@@ -152,7 +152,7 @@ export default function Home() {
 
 function SubHeader({ children, href }: SubHeaderProps) {
   return (
-    <div className="flex items-center justify-between px-4">
+    <div className="flex items-center justify-between px-6">
       <Title.T3 weight="medium">{children}</Title.T3>
       <Link href={href}>
         <button className="flex gap-1 bg-blue-100 rounded-full items-center px-2 py-1">

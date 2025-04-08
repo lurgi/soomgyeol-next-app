@@ -82,7 +82,7 @@ export default function Posts() {
     <div className="container mx-auto px-0">
       <Tabs defaultTab="워크샵/클래스">
         <MobileLayout.SubHeader>
-          <div className="flex w-full px-4 border-b-1 border-slate-300">
+          <div className="flex w-full px-6 border-b-1 border-slate-300">
             <Tabs.Tab id="워크샵/클래스" className="flex-1 text-center">
               워크샵/클래스
             </Tabs.Tab>
@@ -104,7 +104,7 @@ export default function Posts() {
               .map((post, index) => (
                 <Fragment key={index}>
                   {index !== 0 && <Divider />}
-                  <div className="px-4">
+                  <div className="px-6">
                     <PostPreview key={post.id} id={post.id}>
                       <PostPreview.Content
                         title={post.title}
@@ -143,7 +143,7 @@ export default function Posts() {
         <Tabs.Content tabId="구인 게시판" className="flex flex-col gap-4">
           <LocationTags tags={locations} defaultSelected="전체" onChange={setSelectedLocation} />
           <Divider />
-          <div className="py-8 text-center px-4">
+          <div className="py-8 text-center px-6">
             <Body.B1>구인 게시판 내용이 여기에 표시됩니다.</Body.B1>
           </div>
         </Tabs.Content>
@@ -151,7 +151,7 @@ export default function Posts() {
         <Tabs.Content tabId="자유 게시판" className="flex flex-col gap-4">
           <LocationTags tags={locations} defaultSelected="전체" onChange={setSelectedLocation} />
           <Divider />
-          <div className="py-8 text-center px-4">
+          <div className="py-8 text-center px-6">
             <Body.B1>자유 게시판 내용이 여기에 표시됩니다.</Body.B1>
           </div>
         </Tabs.Content>

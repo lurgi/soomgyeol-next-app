@@ -60,7 +60,7 @@ const CommentInput = ({
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="w-full py-3 px-4 rounded-full ring-1 ring-slate-300 bg-white text-slate-800 outline-none focus:ring-2 focus:ring-slate-300"
+          className="w-full py-3 px-6 rounded-full ring-1 ring-slate-300 bg-white text-slate-800 outline-none focus:ring-2 focus:ring-slate-300"
         />
         <button
           onClick={handleSubmit}

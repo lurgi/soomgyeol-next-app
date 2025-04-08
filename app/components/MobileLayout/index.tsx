@@ -63,8 +63,7 @@ const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }
 const MobileLayoutMain = ({ children, className = "", onRefresh }: MobileLayoutMainProps) => {
   return (
     <main
-      className={`relative  "pt-15"
-      } pb-[calc(100px+var(--safe-area-bottom))] overflow-y-auto ${className}`}
+      className={`relative pt-[var(--safe-area-top)] pb-[calc(40px+var(--safe-area-bottom)] overflow-y-auto ${className}`}
     >
       <PullToRefresh onRefresh={onRefresh}>{children}</PullToRefresh>
     </main>

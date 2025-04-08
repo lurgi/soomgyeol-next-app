@@ -3,10 +3,22 @@
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { MapPin, MessageCircle, Heart, Eye, Calendar, MoreHorizontal, CalendarClock } from "lucide-react";
+import { MapPin, MessageCircle, Heart, Eye, Calendar, MoreHorizontal, CalendarClock, LucideProps } from "lucide-react";
 import { Body, Heading } from "../font";
 import { formatDateToYYMMDD, formatTimeToKorean } from "@/app/utils/dateFormat";
 import Avatar from "../Avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+interface DropdownItemProps {
+  label: string;
+  Icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  onClick: () => void;
+}
 
 interface PostDetailProps {
   className?: string;
@@ -22,6 +34,7 @@ interface ContentProps {
     name: string;
     avatar?: string;
   };
+  dropdownItems: DropdownItemProps[];
 }
 
 interface SingleDateMetadataProps {
@@ -59,29 +72,55 @@ interface NoDateMetadataProps {
 
 type MetadataProps = SingleDateMetadataProps | DateRangeMetadataProps | NoDateMetadataProps;
 
+const PostDetailHeaderRow = ({
+  author,
+  dropdownItems,
+}: {
+  author: { name: string; avatar?: string };
+  dropdownItems: DropdownItemProps[];
+}) => {
+  return (
+    <div className="flex justify-between px-4">
+      <div className="flex items-center gap-3">
+        <Avatar name={author.name} avatar={author.avatar} size={36} />
+        <Heading.H3 className="text-slate-800" weight="medium">
+          @{author.name}
+        </Heading.H3>
+      </div>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button>
+            <MoreHorizontal size={24} className="text-slate-800" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="text-slate-800">
+          {dropdownItems.map((item, index) => (
+            <DropdownMenuItem key={index} onClick={item.onClick}>
+              <item.Icon size={16} />
+              <Body.B1>{item.label}</Body.B1>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+};
+
 const PostDetail = ({ className, children }: PostDetailProps) => {
   return <div className={cn("flex flex-col gap-5", className)}>{children}</div>;
 };
 
-const Content = ({ title, description, imageUrl, imageAlt, author }: ContentProps) => {
+const Content = ({ title, description, imageUrl, imageAlt, author, dropdownItems }: ContentProps) => {
   return (
     <div className="flex flex-col gap-5">
       <div className="relative w-full h-[240px] overflow-hidden">
         <Image src={imageUrl} alt={imageAlt || title} fill className="object-cover" />
       </div>
 
-      <div className="flex justify-between px-6">
-        <div className="flex items-center gap-3">
-          <Avatar name={author.name} avatar={author.avatar} size={36} />
-          <Heading.H3 className="text-slate-800" weight="medium">
-            @{author.name}
-          </Heading.H3>
-        </div>
+      <PostDetailHeaderRow author={author} dropdownItems={dropdownItems} />
 
-        <MoreHorizontal size={24} className="text-slate-800" />
-      </div>
-
-      <div className="flex flex-col gap-2 px-6">
+      <div className="flex flex-col gap-2 px-4">
         <Heading.H1 weight="medium" className="text-slate-800">
           {title}
         </Heading.H1>
@@ -94,7 +133,7 @@ const Content = ({ title, description, imageUrl, imageAlt, author }: ContentProp
 
 const Metadata = (props: MetadataProps) => {
   return (
-    <div className="flex flex-col gap-5 px-6">
+    <div className="flex flex-col gap-5 py-4 px-6">
       {props.type !== "none" && (
         <div className="flex flex-col gap-3">
           {props.type === "range" && (

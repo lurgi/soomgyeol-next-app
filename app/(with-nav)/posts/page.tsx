@@ -79,7 +79,7 @@ export default function Posts() {
   const [selectedLocation, setSelectedLocation] = useState<string>("전체");
 
   return (
-    <div className="container mx-auto px-0">
+    <div className="container mx-auto pt-25.5">
       <Tabs defaultTab="워크샵/클래스">
         <MobileLayout.SubHeader>
           <div className="flex w-full px-6 border-b-1 border-slate-300">

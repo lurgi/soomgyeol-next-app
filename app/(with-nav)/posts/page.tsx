@@ -8,6 +8,7 @@ import PostPreview from "@/app/components/PostPreview";
 import Divider from "@/app/components/Divider";
 import { Body } from "@/app/components/font";
 import { useSearchParams } from "next/navigation";
+import PostLightPreview from "@/app/components/PostLightPreview";
 
 // Sample data for posts
 const samplePosts = [
@@ -157,10 +158,34 @@ export default function Posts() {
         </Tabs.Content>
 
         <Tabs.Content tabId="자유 게시판" className="flex flex-col gap-4">
-          <LocationTags tags={locations} defaultSelected="전체" onChange={setSelectedLocation} />
-          <Divider />
-          <div className="py-8 text-center px-6">
-            <Body.B1>자유 게시판 내용이 여기에 표시됩니다.</Body.B1>
+          <div className="space-y-2.5">
+            {samplePosts.map((post) => (
+              <div className="px-6" key={post.id}>
+                <PostLightPreview key={post.id}>
+                  <PostLightPreview.Content
+                    title={post.title}
+                    subtitle={post.subtitle}
+                    imageSrc={post.imageUrl}
+                    imageAlt={post.title}
+                  />
+                  {post.endDate ? (
+                    <PostLightPreview.Metadata
+                      timestamp={post.date}
+                      commentCount={post.commentCount}
+                      likeCount={post.likeCount}
+                      viewCount={post.viewCount}
+                    />
+                  ) : (
+                    <PostLightPreview.Metadata
+                      timestamp={post.date}
+                      commentCount={post.commentCount}
+                      likeCount={post.likeCount}
+                      viewCount={post.viewCount}
+                    />
+                  )}
+                </PostLightPreview>
+              </div>
+            ))}
           </div>
         </Tabs.Content>
       </Tabs>

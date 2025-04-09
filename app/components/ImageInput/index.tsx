@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ImagePlus } from "lucide-react";
 
 interface ImageInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  width: number;
+  width?: number;
   type: "circle" | "square";
 }
 

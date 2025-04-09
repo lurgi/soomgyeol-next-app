@@ -109,7 +109,7 @@ export default function EditProfilePage() {
     <MobileLayout>
       <MobileLayout.Header title="프로필 수정" type="detail" hasIcons={false} />
       <MobileLayout.Main>
-        <div className="space-y-2 mt-14 mb-14">
+        <div className="space-y-2 mt-20 mb-14">
           <div className="px-4 py-2 flex justify-center items-center">
             <ImageInput type="circle" />
           </div>
@@ -146,7 +146,9 @@ export default function EditProfilePage() {
         </div>
 
         <MobileLayout.BottomOverlay>
-          <BottomFloatingButton disabled={false}>수정</BottomFloatingButton>
+          <BottomFloatingButton disabled={false} onClick={() => console.log("edit")}>
+            수정
+          </BottomFloatingButton>
         </MobileLayout.BottomOverlay>
       </MobileLayout.Main>
     </MobileLayout>

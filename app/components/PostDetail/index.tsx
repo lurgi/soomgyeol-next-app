@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { MapPin, MessageCircle, Heart, Eye, Calendar, MoreHorizontal, CalendarClock, LucideProps } from "lucide-react";
@@ -79,8 +79,10 @@ const PostDetailHeaderRow = ({
   author: { name: string; avatar?: string };
   dropdownItems: DropdownItemProps[];
 }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   return (
-    <div className="flex justify-between px-4">
+    <div className="flex justify-between px-6">
       <div className="flex items-center gap-3">
         <Avatar name={author.name} avatar={author.avatar} size={36} />
         <Heading.H3 className="text-slate-800" weight="medium">
@@ -88,9 +90,14 @@ const PostDetailHeaderRow = ({
         </Heading.H3>
       </div>
 
-      <DropdownMenu>
+      <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
         <DropdownMenuTrigger asChild>
-          <button>
+          <button
+            className={cn(
+              "flex items-center justify-center rounded-full w-8 h-8 focus:outline-none",
+              isDropdownOpen && "bg-slate-100"
+            )}
+          >
             <MoreHorizontal size={24} className="text-slate-800" />
           </button>
         </DropdownMenuTrigger>
@@ -108,7 +115,7 @@ const PostDetailHeaderRow = ({
 };
 
 const PostDetail = ({ className, children }: PostDetailProps) => {
-  return <div className={cn("flex flex-col gap-5", className)}>{children}</div>;
+  return <div className={cn("flex flex-col", className)}>{children}</div>;
 };
 
 const Content = ({ title, description, imageUrl, imageAlt, author, dropdownItems }: ContentProps) => {
@@ -120,7 +127,7 @@ const Content = ({ title, description, imageUrl, imageAlt, author, dropdownItems
 
       <PostDetailHeaderRow author={author} dropdownItems={dropdownItems} />
 
-      <div className="flex flex-col gap-2 px-4">
+      <div className="flex flex-col gap-2 px-6">
         <Heading.H1 weight="medium" className="text-slate-800">
           {title}
         </Heading.H1>
@@ -137,18 +144,18 @@ const Metadata = (props: MetadataProps) => {
       {props.type !== "none" && (
         <div className="flex flex-col gap-3">
           {props.type === "range" && (
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <Calendar size={24} className="text-slate-500" />
-                <Body.B1 className="text-slate-600">
+                <Calendar size={22} className="text-slate-500" />
+                <Body.B2 className="text-slate-600">
                   {formatDateToYYMMDD(props.startDate)} ~ {formatDateToYYMMDD(props.endDate)}
-                </Body.B1>
+                </Body.B2>
               </div>
               {props.daysOfWeek && props.daysOfWeek.length > 0 && (
                 <div className="flex items-center gap-2 ml-8">
-                  <Body.B1 className="text-slate-600">
+                  <Body.B2 className="text-slate-600">
                     {props.daysOfWeek.join(", ")} {formatTimeToKorean(props.startDate)}
-                  </Body.B1>
+                  </Body.B2>
                 </div>
               )}
             </div>
@@ -156,17 +163,17 @@ const Metadata = (props: MetadataProps) => {
 
           {props.type === "single" && (
             <div className="flex items-center gap-2">
-              <CalendarClock size={24} className="text-slate-500" />
-              <Body.B1 className="text-slate-600">
+              <CalendarClock size={22} className="text-slate-500" />
+              <Body.B2 className="text-slate-600">
                 {formatDateToYYMMDD(props.date)} {formatTimeToKorean(props.date)}
-              </Body.B1>
+              </Body.B2>
             </div>
           )}
 
           {(props.type === "single" || props.type === "range") && props.location && (
             <div className="flex items-center gap-2">
               <MapPin size={24} className="text-slate-500" />
-              <Body.B1 className="text-slate-600">{props.location}</Body.B1>
+              <Body.B2 className="text-slate-600">{props.location}</Body.B2>
             </div>
           )}
         </div>

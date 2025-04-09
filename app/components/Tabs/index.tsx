@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { Body } from "../font";
 
 type TabsContextType = {
   activeTab: string;
@@ -73,7 +72,7 @@ const Tab = ({ id, children, className }: TabProps) => {
       aria-selected={isActive}
       role="tab"
     >
-      <Body.B1>{children}</Body.B1>
+      {children}
     </button>
   );
 };

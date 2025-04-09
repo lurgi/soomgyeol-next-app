@@ -76,7 +76,7 @@ export default function Profile() {
       <Divider height={12} />
 
       <div className="flex flex-col gap-4">
-        <SubHeader href="/posts?type=free">작성한 게시글</SubHeader>
+        <SubHeader href="/profile/posts?type=myPosts">작성한 게시글</SubHeader>
         <div className="flex flex-col px-6 gap-4">
           {sampleFreePosts.map((post) => (
             <PostLightPreview key={post.id}>

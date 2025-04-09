@@ -7,6 +7,7 @@ import LocationTags from "@/app/components/LocationTags";
 import PostPreview from "@/app/components/PostPreview";
 import Divider from "@/app/components/Divider";
 import { Body } from "@/app/components/font";
+import { useSearchParams } from "next/navigation";
 
 // Sample data for posts
 const samplePosts = [
@@ -76,21 +77,28 @@ const samplePosts = [
 const locations = ["전체", "내 근처", "강남", "제주도", "서울", "부산", "인천", "대구", "광주", "대전", "울산"];
 
 export default function Posts() {
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type") as "workshop" | "free" | null;
+  const SEARCH_PARAM_TYPE = {
+    workshop: "워크샵/클래스",
+    free: "자유 게시판",
+  };
+
   const [selectedLocation, setSelectedLocation] = useState<string>("전체");
 
   return (
     <div className="container mx-auto pt-25.5">
-      <Tabs defaultTab="워크샵/클래스">
+      <Tabs defaultTab={type ? SEARCH_PARAM_TYPE[type] : "워크샵/클래스"}>
         <MobileLayout.SubHeader>
           <div className="flex w-full px-6 border-b-1 border-slate-300">
             <Tabs.Tab id="워크샵/클래스" className="flex-1 text-center">
-              워크샵/클래스
+              <Body.B1>워크샵/클래스</Body.B1>
             </Tabs.Tab>
             <Tabs.Tab id="구인 게시판" className="flex-1 text-center">
-              구인 게시판
+              <Body.B1>구인 게시판</Body.B1>
             </Tabs.Tab>
             <Tabs.Tab id="자유 게시판" className="flex-1 text-center">
-              자유 게시판
+              <Body.B1>자유 게시판</Body.B1>
             </Tabs.Tab>
           </div>
         </MobileLayout.SubHeader>

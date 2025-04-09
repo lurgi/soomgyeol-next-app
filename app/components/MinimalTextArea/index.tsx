@@ -16,7 +16,7 @@ export default function MinimalTextArea({ maxLength = 500, ...props }: MinimalTe
   };
 
   return (
-    <div className="w-full flex flex-col">
+    <label className="w-full flex flex-col">
       <Body.B1>
         <textarea
           {...props}
@@ -33,6 +33,6 @@ export default function MinimalTextArea({ maxLength = 500, ...props }: MinimalTe
       <Caption.C1 className="text-right text-slate-500">
         ({String(props.value)?.length ?? 0}/{maxLength})
       </Caption.C1>
-    </div>
+    </label>
   );
 }

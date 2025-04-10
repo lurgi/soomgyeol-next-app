@@ -2,6 +2,7 @@
 
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup } from "@/components/ui/select";
 import { Body } from "../font";
+import { cn } from "@/lib/utils";
 
 type TimePickerType = "hour" | "minute";
 
@@ -15,14 +16,19 @@ const TimePicker = ({ type, value, onChange }: TimePickerProps) => {
   const options =
     type === "hour"
       ? Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"))
-      : Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
+      : Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0"));
 
   const suffix = type === "hour" ? "시" : "분";
 
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-full !h-fit !border-slate-300 !text-slate-500 !py-2">
-        <Body.B2>
+      <SelectTrigger
+        className={cn(
+          "w-full !h-fit  !py-2",
+          value ? "!text-slate-800 !border-slate-400" : "!text-slate-500 !border-slate-300"
+        )}
+      >
+        <Body.B2 weight={value ? "medium" : "regular"}>
           {value} {suffix}
         </Body.B2>
       </SelectTrigger>

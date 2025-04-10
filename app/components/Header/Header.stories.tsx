@@ -38,6 +38,7 @@ export const Detail: Story = {
     type: "detail",
     title: "상세 페이지",
     hasIcons: false,
+    activeItem: "posts",
   },
 };
 
@@ -47,5 +48,6 @@ export const Back: Story = {
     type: "detail",
     title: "뒤로가기",
     hasIcons: true,
+    activeItem: "posts",
   },
 };

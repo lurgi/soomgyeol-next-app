@@ -5,6 +5,7 @@ import MobileLayout from "../components/MobileLayout";
 import { NAV_ITEMS, NavItemType } from "@/types/navigation";
 import useIsMobile from "../hooks/useIsMobile";
 import Header from "../components/Header";
+import DesktopLayout from "../components/DesktopLayout";
 
 export default function Layout({
   children,
@@ -33,10 +34,12 @@ export default function Layout({
           <MobileLayout.Navbar activeItem={activeItem} />
         </MobileLayout>
       ) : (
-        <div className="flex flex-col justify-center items-center mb-20">
-          <Header activeItem={activeItem} />
-          <main className="w-full max-w-5xl">{children}</main>
-        </div>
+        <DesktopLayout>
+          <DesktopLayout.Header>
+            <Header activeItem={activeItem} />
+          </DesktopLayout.Header>
+          <DesktopLayout.Main>{children}</DesktopLayout.Main>
+        </DesktopLayout>
       )}
     </>
   );

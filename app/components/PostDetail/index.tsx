@@ -1,18 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { MapPin, MessageCircle, Heart, Eye, Calendar, MoreHorizontal, CalendarClock, LucideProps } from "lucide-react";
+import { MapPin, Eye, Calendar, CalendarClock, LucideProps } from "lucide-react";
 import { Body, Heading } from "../font";
 import { formatDateToYYMMDD, formatTimeToKorean } from "@/app/utils/dateFormat";
 import Avatar from "../Avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface DropdownItemProps {
   label: string;
@@ -74,12 +67,12 @@ type MetadataProps = SingleDateMetadataProps | DateRangeMetadataProps | NoDateMe
 
 const PostDetailHeaderRow = ({
   author,
-  dropdownItems,
-}: {
+}: // dropdownItems,
+{
   author: { name: string; avatar?: string };
   dropdownItems: DropdownItemProps[];
 }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <div className="flex justify-between px-6">
@@ -90,7 +83,7 @@ const PostDetailHeaderRow = ({
         </Heading.H3>
       </div>
 
-      <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+      {/* <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
@@ -109,19 +102,19 @@ const PostDetailHeaderRow = ({
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </div>
   );
 };
 
 const PostDetail = ({ className, children }: PostDetailProps) => {
-  return <div className={cn("flex flex-col", className)}>{children}</div>;
+  return <div className={cn("flex flex-col md:gap-5", className)}>{children}</div>;
 };
 
 const Content = ({ title, description, imageUrl, imageAlt, author, dropdownItems }: ContentProps) => {
   return (
-    <div className="flex flex-col gap-5">
-      <div className="relative w-full h-[240px] overflow-hidden">
+    <div className="flex flex-col gap-5 md:gap-8">
+      <div className="relative w-full sm:max-w-[480px] h-[240px] overflow-hidden sm:mx-auto sm:rounded-xl shadow-sm aspect-[4/3]">
         <Image src={imageUrl} alt={imageAlt || title} fill className="object-cover" />
       </div>
 
@@ -181,7 +174,7 @@ const Metadata = (props: MetadataProps) => {
 
       <div className="flex items-end justify-between gap-4">
         <div className="flex items-center gap-1">
-          <button
+          {/* <button
             onClick={props.onLikeClick}
             className="flex items-center gap-1 focus:outline-none"
             aria-label="좋아요"
@@ -194,14 +187,14 @@ const Metadata = (props: MetadataProps) => {
               )}
             />
             <Body.B1 className="text-slate-600">{props.likeCount || 0}</Body.B1>
-          </button>
+          </button> */}
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
+          {/* <div className="flex items-center gap-1">
             <MessageCircle size={16} className="text-slate-500" />
             <Body.B2 className="text-slate-500">{props.commentCount || 0}</Body.B2>
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-1">
             <Eye size={16} className="text-slate-500" />

@@ -1,21 +1,31 @@
 "use client";
-import Divider from "@/app/components/Divider";
 import MobileLayout from "@/app/components/MobileLayout";
 import PostDetail from "@/app/components/PostDetail";
-import Comment from "@/app/components/Comment";
 
 import { useState } from "react";
 import { Edit3, RotateCw, Trash2 } from "lucide-react";
-import CommentInput from "@/app/components/CommentInput";
+import useIsMobile from "@/app/hooks/useIsMobile";
+import Header from "@/app/components/Header";
+import DesktopLayout from "@/app/components/DesktopLayout";
 
 export default function PostDetailPage() {
-  return (
+  const isMobile = useIsMobile();
+  return isMobile ? (
     <MobileLayout>
       <MobileLayout.Header type="detail" title="" />
       <MobileLayout.Main>
         <PostContent />
       </MobileLayout.Main>
     </MobileLayout>
+  ) : (
+    <DesktopLayout>
+      <DesktopLayout.Header>
+        <Header />
+      </DesktopLayout.Header>
+      <DesktopLayout.Main>
+        <PostContent />
+      </DesktopLayout.Main>
+    </DesktopLayout>
   );
 }
 
@@ -34,7 +44,7 @@ function PostContent() {
     setLikeCount((prev) => (prev === 42 ? 43 : 42));
   };
   return (
-    <div className="flex flex-col gap-5 pt-12">
+    <div className="flex flex-col gap-5 pt-12 md:pt-4">
       <PostDetail>
         <PostDetail.Content
           title="주말 오전 하타요가 클래스 대타 강사님 구합니다"
@@ -60,7 +70,7 @@ function PostContent() {
         />
       </PostDetail>
 
-      <Divider />
+      {/* <Divider />
 
       <div className="px-6">
         <Comment>
@@ -87,7 +97,7 @@ function PostContent() {
         <div className="py-2 px-4 bg-slate-100">
           <CommentInput />
         </div>
-      </MobileLayout.BottomOverlay>
+      </MobileLayout.BottomOverlay> */}
     </div>
   );
 }

@@ -107,8 +107,8 @@ interface SubHeaderProps {
 
 export default function Home() {
   return (
-    <div className="space-y-6 mt-18 lg:mt-8">
-      <div className="flex flex-col gap-3 lg:gap-5">
+    <div className="space-y-6 mt-18 md:mt-8">
+      <div className="flex flex-col gap-3 md:gap-5">
         <SubHeader href="/posts?type=workshop">워크샵 / 클래스</SubHeader>
         <Carousel posts={samplePosts} />
       </div>

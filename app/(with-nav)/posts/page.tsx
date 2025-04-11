@@ -8,7 +8,7 @@ import PostPreview from "@/app/components/PostPreview";
 import Divider from "@/app/components/Divider";
 import { Body } from "@/app/components/font";
 import { useSearchParams } from "next/navigation";
-import PostLightPreview from "@/app/components/PostLightPreview";
+import useIsMobile from "@/app/hooks/useIsMobile";
 
 // Sample data for posts
 const samplePosts = [
@@ -80,6 +80,7 @@ const locations = ["전체", "내 근처", "강남", "제주도", "서울", "부
 export default function Posts() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type") as "workshop" | "free" | null;
+  const isMobile = useIsMobile();
   const SEARCH_PARAM_TYPE = {
     workshop: "워크샵/클래스",
     free: "자유 게시판",
@@ -88,26 +89,41 @@ export default function Posts() {
   const [selectedLocation, setSelectedLocation] = useState<string>("전체");
 
   return (
-    <div className="container mx-auto pt-25.5">
+    <div className="container mx-auto pt-25.5 md:pt-0">
       <Tabs defaultTab={type ? SEARCH_PARAM_TYPE[type] : "워크샵/클래스"}>
-        <MobileLayout.SubHeader>
-          <div className="flex w-full px-6 border-b-1 border-slate-300">
-            <Tabs.Tab id="워크샵/클래스" className="flex-1 text-center">
-              <Body.B1>워크샵/클래스</Body.B1>
-            </Tabs.Tab>
-            <Tabs.Tab id="구인 게시판" className="flex-1 text-center">
-              <Body.B1>구인 게시판</Body.B1>
-            </Tabs.Tab>
-            <Tabs.Tab id="자유 게시판" className="flex-1 text-center">
-              <Body.B1>자유 게시판</Body.B1>
-            </Tabs.Tab>
-          </div>
-        </MobileLayout.SubHeader>
+        {isMobile ? (
+          <MobileLayout.SubHeader>
+            <div className="flex w-full px-6 border-b-1 border-slate-300">
+              <Tabs.Tab id="워크샵/클래스" className="flex-1 text-center">
+                <Body.B1>워크샵/클래스</Body.B1>
+              </Tabs.Tab>
+              {/* <Tabs.Tab id="구인 게시판" className="flex-1 text-center">
+                <Body.B1>구인 게시판</Body.B1>
+              </Tabs.Tab>
+              <Tabs.Tab id="자유 게시판" className="flex-1 text-center">
+                <Body.B1>자유 게시판</Body.B1>
+              </Tabs.Tab> */}
+            </div>
+          </MobileLayout.SubHeader>
+        ) : (
+          <></>
+          // <div className="flex w-full px-6 border-b-1 border-slate-300">
+          //   <Tabs.Tab id="워크샵/클래스" className="flex-1 text-center">
+          //     <Body.B1>워크샵/클래스</Body.B1>
+          //   </Tabs.Tab>
+          //   <Tabs.Tab id="구인 게시판" className="flex-1 text-center">
+          //     <Body.B1>구인 게시판</Body.B1>
+          //   </Tabs.Tab>
+          //   <Tabs.Tab id="자유 게시판" className="flex-1 text-center">
+          //     <Body.B1>자유 게시판</Body.B1>
+          //   </Tabs.Tab>
+          // </div>
+        )}
 
         <Tabs.Content tabId="워크샵/클래스" className="flex flex-col gap-4">
           <LocationTags tags={locations} defaultSelected="전체" onChange={setSelectedLocation} />
 
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 md:mt-6">
             {samplePosts
               .filter((post) => selectedLocation === "전체" || post.location.includes(selectedLocation))
               .map((post, index) => (
@@ -149,7 +165,7 @@ export default function Posts() {
           </div>
         </Tabs.Content>
 
-        <Tabs.Content tabId="구인 게시판" className="flex flex-col gap-4">
+        {/* <Tabs.Content tabId="구인 게시판" className="flex flex-col gap-4">
           <LocationTags tags={locations} defaultSelected="전체" onChange={setSelectedLocation} />
           <Divider />
           <div className="py-8 text-center px-6">
@@ -187,7 +203,7 @@ export default function Posts() {
               </div>
             ))}
           </div>
-        </Tabs.Content>
+        </Tabs.Content> */}
       </Tabs>
     </div>
   );

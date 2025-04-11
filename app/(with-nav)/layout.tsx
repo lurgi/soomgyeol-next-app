@@ -33,7 +33,7 @@ export default function Layout({
           <MobileLayout.Navbar activeItem={activeItem} />
         </MobileLayout>
       ) : (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center mb-20">
           <Header activeItem={activeItem} />
           <main className="w-full max-w-5xl">{children}</main>
         </div>

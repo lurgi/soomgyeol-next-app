@@ -65,7 +65,7 @@ const Tab = ({ id, children, className }: TabProps) => {
     <button
       onClick={() => setActiveTab(id)}
       className={cn(
-        "py-1.5 transition-colors w-full",
+        "py-1.5 transition-colors w-full hover:cursor-pointer",
         isActive ? "border-b-2 border-slate-800 text-slate-800" : "text-slate-600 hover:text-gray-700",
         className
       )}

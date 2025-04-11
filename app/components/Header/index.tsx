@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 type HeaderType = "main" | "detail";
 
 interface HeaderProps {
-  activeItem: Exclude<NavItemType, "home">;
+  activeItem?: NavItemType;
   type?: HeaderType;
   title?: string;
   hasIcons?: boolean;
@@ -59,7 +59,7 @@ export default function Header({ activeItem, type = "main", title = "숨결", ha
 }
 
 interface NavbarProps {
-  activeItem?: Exclude<NavItemType, "home">;
+  activeItem?: NavItemType;
 }
 
 function Navbar({ activeItem }: NavbarProps) {

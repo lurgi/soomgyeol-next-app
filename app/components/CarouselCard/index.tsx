@@ -1,0 +1,56 @@
+"use client";
+
+import Image from "next/image";
+import { MapPin, Eye } from "lucide-react";
+import { Heading, Body, Caption } from "../font";
+
+interface CarouselCardProps {
+  image: string;
+  title: string;
+  content: string;
+  location: string;
+  viewCount: number;
+  className?: string;
+}
+
+export default function CarouselCard({
+  image,
+  title,
+  content,
+  location,
+  viewCount,
+  className = "",
+}: CarouselCardProps) {
+  return (
+    <div className={`w-[240px] h-[280px] rounded-lg border border-gray-200 overflow-hidden flex flex-col ${className}`}>
+      {/* 이미지 영역 */}
+      <div className="relative w-full h-[140px]">
+        <Image src={image} alt={title} width={240} height={120} className="object-cover" />
+      </div>
+
+      {/* 컨텐츠 영역 */}
+      <div className="flex flex-col p-3 flex-grow">
+        <Heading.H3 weight="medium" className="mb-1 line-clamp-1">
+          {title}
+        </Heading.H3>
+        <Body.B2 className="text-gray-700 mb-2 line-clamp-3">{content}</Body.B2>
+
+        {/* 하단 정보 영역 */}
+        <div className="mt-auto flex justify-between items-center">
+          <div className="flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5 text-gray-500" />
+            <Caption.C1 weight="regular" className="text-gray-500">
+              {location}
+            </Caption.C1>
+          </div>
+          <div className="flex items-center gap-1">
+            <Eye className="w-3.5 h-3.5 text-gray-500" />
+            <Caption.C1 weight="regular" className="text-gray-500">
+              {viewCount}
+            </Caption.C1>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

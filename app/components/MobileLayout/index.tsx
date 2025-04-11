@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useRef, ReactNode, useEffect, createContext, useContext } from "react";
+import React, { useState, useRef, ReactNode, useEffect, createContext, useContext, Suspense } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { createPortal } from "react-dom";
 import Header from "../Header";
 import PullToRefresh from "./PullToRefresh";
 import { NavItemType } from "@/types/navigation";
 import Navbar from "../Navbar";
+import Loader from "../Loader";
 
 interface MobileLayoutContextType {
   hasSubHeader: boolean;
@@ -62,11 +63,13 @@ const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }
 
 const MobileLayoutMain = ({ children, className = "", onRefresh }: MobileLayoutMainProps) => {
   return (
-    <main
-      className={`relative pt-[var(--safe-area-top)] pb-[calc(40px+var(--safe-area-bottom)] overflow-y-auto ${className}`}
-    >
-      <PullToRefresh onRefresh={onRefresh}>{children}</PullToRefresh>
-    </main>
+    <Suspense fallback={<Loader />}>
+      <main
+        className={`relative pt-[var(--safe-area-top)] pb-[calc(40px+var(--safe-area-bottom)] overflow-y-auto ${className}`}
+      >
+        <PullToRefresh onRefresh={onRefresh}>{children}</PullToRefresh>
+      </main>
+    </Suspense>
   );
 };
 

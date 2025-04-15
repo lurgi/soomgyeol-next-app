@@ -127,7 +127,8 @@ exports.Prisma.WorkshopScalarFieldEnum = {
   updated_at: 'updated_at',
   created_by: 'created_by',
   locationtext: 'locationtext',
-  overview: 'overview'
+  overview: 'overview',
+  place: 'place'
 };
 
 exports.Prisma.SortOrder = {

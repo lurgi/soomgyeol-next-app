@@ -24,6 +24,7 @@ model workshop {
   created_by   String?                   @db.Uuid
   locationtext String?
   overview     String?
+  place        String?
 
   @@index([location], type: Gist)
 }

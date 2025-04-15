@@ -902,6 +902,7 @@ export namespace Prisma {
     created_by: string | null
     locationtext: string | null
     overview: string | null
+    place: string | null
   }
 
   export type WorkshopMaxAggregateOutputType = {
@@ -915,6 +916,7 @@ export namespace Prisma {
     created_by: string | null
     locationtext: string | null
     overview: string | null
+    place: string | null
   }
 
   export type WorkshopCountAggregateOutputType = {
@@ -928,6 +930,7 @@ export namespace Prisma {
     created_by: number
     locationtext: number
     overview: number
+    place: number
     _all: number
   }
 
@@ -951,6 +954,7 @@ export namespace Prisma {
     created_by?: true
     locationtext?: true
     overview?: true
+    place?: true
   }
 
   export type WorkshopMaxAggregateInputType = {
@@ -964,6 +968,7 @@ export namespace Prisma {
     created_by?: true
     locationtext?: true
     overview?: true
+    place?: true
   }
 
   export type WorkshopCountAggregateInputType = {
@@ -977,6 +982,7 @@ export namespace Prisma {
     created_by?: true
     locationtext?: true
     overview?: true
+    place?: true
     _all?: true
   }
 
@@ -1077,6 +1083,7 @@ export namespace Prisma {
     created_by: string | null
     locationtext: string | null
     overview: string | null
+    place: string | null
     _count: WorkshopCountAggregateOutputType | null
     _avg: WorkshopAvgAggregateOutputType | null
     _sum: WorkshopSumAggregateOutputType | null
@@ -1109,6 +1116,7 @@ export namespace Prisma {
     created_by?: boolean
     locationtext?: boolean
     overview?: boolean
+    place?: boolean
   }, ExtArgs["result"]["workshop"]>
 
   export type workshopSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1122,6 +1130,7 @@ export namespace Prisma {
     created_by?: boolean
     locationtext?: boolean
     overview?: boolean
+    place?: boolean
   }, ExtArgs["result"]["workshop"]>
 
   export type workshopSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1135,6 +1144,7 @@ export namespace Prisma {
     created_by?: boolean
     locationtext?: boolean
     overview?: boolean
+    place?: boolean
   }, ExtArgs["result"]["workshop"]>
 
   export type workshopSelectScalar = {
@@ -1148,9 +1158,10 @@ export namespace Prisma {
     created_by?: boolean
     locationtext?: boolean
     overview?: boolean
+    place?: boolean
   }
 
-  export type workshopOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "image_url" | "description" | "view" | "created_at" | "updated_at" | "created_by" | "locationtext" | "overview", ExtArgs["result"]["workshop"]>
+  export type workshopOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "image_url" | "description" | "view" | "created_at" | "updated_at" | "created_by" | "locationtext" | "overview" | "place", ExtArgs["result"]["workshop"]>
 
   export type $workshopPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "workshop"
@@ -1166,6 +1177,7 @@ export namespace Prisma {
       created_by: string | null
       locationtext: string | null
       overview: string | null
+      place: string | null
     }, ExtArgs["result"]["workshop"]>
     composites: {}
   }
@@ -1599,6 +1611,7 @@ export namespace Prisma {
     readonly created_by: FieldRef<"workshop", 'String'>
     readonly locationtext: FieldRef<"workshop", 'String'>
     readonly overview: FieldRef<"workshop", 'String'>
+    readonly place: FieldRef<"workshop", 'String'>
   }
     
 
@@ -1989,7 +2002,8 @@ export namespace Prisma {
     updated_at: 'updated_at',
     created_by: 'created_by',
     locationtext: 'locationtext',
-    overview: 'overview'
+    overview: 'overview',
+    place: 'place'
   };
 
   export type WorkshopScalarFieldEnum = (typeof WorkshopScalarFieldEnum)[keyof typeof WorkshopScalarFieldEnum]
@@ -2097,6 +2111,7 @@ export namespace Prisma {
     created_by?: UuidNullableFilter<"workshop"> | string | null
     locationtext?: StringNullableFilter<"workshop"> | string | null
     overview?: StringNullableFilter<"workshop"> | string | null
+    place?: StringNullableFilter<"workshop"> | string | null
   }
 
   export type workshopOrderByWithRelationInput = {
@@ -2110,6 +2125,7 @@ export namespace Prisma {
     created_by?: SortOrderInput | SortOrder
     locationtext?: SortOrderInput | SortOrder
     overview?: SortOrderInput | SortOrder
+    place?: SortOrderInput | SortOrder
   }
 
   export type workshopWhereUniqueInput = Prisma.AtLeast<{
@@ -2126,6 +2142,7 @@ export namespace Prisma {
     created_by?: UuidNullableFilter<"workshop"> | string | null
     locationtext?: StringNullableFilter<"workshop"> | string | null
     overview?: StringNullableFilter<"workshop"> | string | null
+    place?: StringNullableFilter<"workshop"> | string | null
   }, "id">
 
   export type workshopOrderByWithAggregationInput = {
@@ -2139,6 +2156,7 @@ export namespace Prisma {
     created_by?: SortOrderInput | SortOrder
     locationtext?: SortOrderInput | SortOrder
     overview?: SortOrderInput | SortOrder
+    place?: SortOrderInput | SortOrder
     _count?: workshopCountOrderByAggregateInput
     _avg?: workshopAvgOrderByAggregateInput
     _max?: workshopMaxOrderByAggregateInput
@@ -2160,6 +2178,7 @@ export namespace Prisma {
     created_by?: UuidNullableWithAggregatesFilter<"workshop"> | string | null
     locationtext?: StringNullableWithAggregatesFilter<"workshop"> | string | null
     overview?: StringNullableWithAggregatesFilter<"workshop"> | string | null
+    place?: StringNullableWithAggregatesFilter<"workshop"> | string | null
   }
 
   export type workshopCreateInput = {
@@ -2173,6 +2192,7 @@ export namespace Prisma {
     created_by?: string | null
     locationtext?: string | null
     overview?: string | null
+    place?: string | null
   }
 
   export type workshopUncheckedCreateInput = {
@@ -2186,6 +2206,7 @@ export namespace Prisma {
     created_by?: string | null
     locationtext?: string | null
     overview?: string | null
+    place?: string | null
   }
 
   export type workshopUpdateInput = {
@@ -2199,6 +2220,7 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     locationtext?: NullableStringFieldUpdateOperationsInput | string | null
     overview?: NullableStringFieldUpdateOperationsInput | string | null
+    place?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type workshopUncheckedUpdateInput = {
@@ -2212,6 +2234,7 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     locationtext?: NullableStringFieldUpdateOperationsInput | string | null
     overview?: NullableStringFieldUpdateOperationsInput | string | null
+    place?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type workshopCreateManyInput = {
@@ -2225,6 +2248,7 @@ export namespace Prisma {
     created_by?: string | null
     locationtext?: string | null
     overview?: string | null
+    place?: string | null
   }
 
   export type workshopUpdateManyMutationInput = {
@@ -2238,6 +2262,7 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     locationtext?: NullableStringFieldUpdateOperationsInput | string | null
     overview?: NullableStringFieldUpdateOperationsInput | string | null
+    place?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type workshopUncheckedUpdateManyInput = {
@@ -2251,6 +2276,7 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     locationtext?: NullableStringFieldUpdateOperationsInput | string | null
     overview?: NullableStringFieldUpdateOperationsInput | string | null
+    place?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -2345,6 +2371,7 @@ export namespace Prisma {
     created_by?: SortOrder
     locationtext?: SortOrder
     overview?: SortOrder
+    place?: SortOrder
   }
 
   export type workshopAvgOrderByAggregateInput = {
@@ -2362,6 +2389,7 @@ export namespace Prisma {
     created_by?: SortOrder
     locationtext?: SortOrder
     overview?: SortOrder
+    place?: SortOrder
   }
 
   export type workshopMinOrderByAggregateInput = {
@@ -2375,6 +2403,7 @@ export namespace Prisma {
     created_by?: SortOrder
     locationtext?: SortOrder
     overview?: SortOrder
+    place?: SortOrder
   }
 
   export type workshopSumOrderByAggregateInput = {

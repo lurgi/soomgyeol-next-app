@@ -7,11 +7,11 @@ import LocationTags from "@/app/components/LocationTags";
 import { Body } from "@/app/components/font";
 import { useSearchParams } from "next/navigation";
 import useIsMobile from "@/app/hooks/useIsMobile";
-import { useWorkshopsQuery, LocationType } from "@/app/hooks/useWorkshopsQuery";
-import WorkshopsList from "@/app/components/WorkshopsList";
+import { locations, LocationType } from "@/app/hooks/useWorkshopsQuery";
+import WorkshopsList from "./WorkshopsList";
 import WorkshopsLoadingSkeleton from "@/app/components/WorkshopsLoadingSkeleton";
-
-const locations = ["전체", "내 근처", "수도권", "제주"];
+import { ErrorBoundary } from "react-error-boundary";
+import CarouselError from "@/app/components/_fallback/CarouselError";
 
 export default function Posts() {
   const searchParams = useSearchParams();
@@ -24,16 +24,13 @@ export default function Posts() {
 
   const [selectedLocation, setSelectedLocation] = useState<LocationType>("전체");
 
-  // 위치 변경 핸들러 - string을 LocationType으로 변환
   const handleLocationChange = (location: string) => {
-    // LocationType에 해당하는 값만 허용
-    if (location === "전체" || location === "내 근처" || location === "수도권" || location === "제주") {
+    if (location === "전체" || location === "내 근처" || location === "서울" || location === "제주") {
       setSelectedLocation(location);
     }
   };
   const [userCoordinates, setUserCoordinates] = useState<GeolocationCoordinates>();
 
-  // 사용자 위치 가져오기 (내 근처 선택 시)
   useEffect(() => {
     if (selectedLocation === "내 근처" && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -46,15 +43,6 @@ export default function Posts() {
       );
     }
   }, [selectedLocation]);
-
-  const { data: workshops, error } = useWorkshopsQuery(selectedLocation, userCoordinates);
-
-  // 에러 로깅
-  useEffect(() => {
-    if (error) {
-      console.error("워크샵 데이터를 가져오는데 실패했습니다:", error);
-    }
-  }, [error]);
 
   return (
     <div className="container mx-auto pt-25.5 md:pt-0">
@@ -92,9 +80,11 @@ export default function Posts() {
           <LocationTags tags={locations} defaultSelected="전체" onChange={handleLocationChange} />
 
           <div className="space-y-2.5 md:mt-6">
-            <Suspense fallback={<WorkshopsLoadingSkeleton />}>
-              <WorkshopsList workshops={workshops} />
-            </Suspense>
+            <ErrorBoundary fallback={<CarouselError />}>
+              <Suspense fallback={<WorkshopsLoadingSkeleton />}>
+                <WorkshopsList selectedLocation={selectedLocation} userCoordinates={userCoordinates} />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </Tabs.Content>
 

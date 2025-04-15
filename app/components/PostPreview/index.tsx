@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { MapPin, MessageCircle, Heart, Eye } from "lucide-react";
+import { MapPin, MessageCircle, Heart, Eye, CalendarClock } from "lucide-react";
 import { Body, Caption, Heading } from "../font";
 import Link from "next/link";
 import { formatDateToMMDD, formatTimeToKorean, formatDateRange } from "@/app/utils/dateFormat";
@@ -24,8 +23,8 @@ interface ContentProps {
 
 // Single date event metadata props
 interface SingleDateMetadataProps {
-  type: 'single';
-  date: Date;
+  type: "single";
+  date?: Date;
   commentCount?: number;
   likeCount?: number;
   viewCount: number;
@@ -34,7 +33,7 @@ interface SingleDateMetadataProps {
 
 // Date range event metadata props
 interface DateRangeMetadataProps {
-  type: 'range';
+  type: "range";
   startDate: Date;
   endDate: Date;
   daysOfWeek?: string[];
@@ -61,7 +60,7 @@ const Content = ({ title, subtitle, imageUrl, imageAlt }: ContentProps) => {
   return (
     <div className="flex gap-3">
       <div className="relative aspect-square rounded-lg overflow-hidden w-[94px] h-[94px]">
-        <Image src={imageUrl} alt={imageAlt || title} fill sizes="94px" className="object-cover" />
+        <img src={imageUrl} alt={imageAlt || title} className="w-full h-full object-cover" />
       </div>
       <div className="flex-1 flex flex-col gap-1">
         <Heading.H3 weight="medium" className="text-slate-800 line-clamp-2">
@@ -74,43 +73,33 @@ const Content = ({ title, subtitle, imageUrl, imageAlt }: ContentProps) => {
 };
 
 const Metadata = (props: MetadataProps) => {
-  // Format date string based on the type of date (single or range)
   const getFormattedDateString = () => {
-    if (props.type === 'single') {
+    if (props.type === "single" && props.date) {
       const dateStr = formatDateToMMDD(props.date);
       const timeStr = formatTimeToKorean(props.date);
       return `${dateStr} ${timeStr}`;
     } else {
-      return formatDateRange(props.startDate, props.endDate, props.daysOfWeek);
+      return props.type === "range" && props.startDate && props.endDate
+        ? formatDateRange(props.startDate, props.endDate, props.daysOfWeek)
+        : "";
     }
   };
 
+  const formattedDateString = getFormattedDateString();
+
   return (
     <div className="flex justify-between items-end text-slate-500">
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
         <div className="flex items-center gap-0.5">
           <MapPin size={16} className="flex-shrink-0" />
-          <Caption.C1 className="truncate">{props.location}</Caption.C1>
+          <Body.B2 className="truncate">{props.location}</Body.B2>
         </div>
-        <div className="flex items-center gap-0.5">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="flex-shrink-0"
-          >
-            <path
-              d="M8 4.66667V8L10 10M13.3333 8C13.3333 10.9455 10.9455 13.3333 8 13.3333C5.05448 13.3333 2.66667 10.9455 2.66667 8C2.66667 5.05448 5.05448 2.66667 8 2.66667C10.9455 2.66667 13.3333 5.05448 13.3333 8Z"
-              stroke="currentColor"
-              strokeWidth="1.33333"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <Caption.C1>{getFormattedDateString()}</Caption.C1>
-        </div>
+        {formattedDateString && (
+          <div className="flex items-center gap-0.5">
+            <CalendarClock size={16} className="flex-shrink-0" />
+            <Body.B2>{formattedDateString}</Body.B2>
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2">
         {props.commentCount !== undefined && props.commentCount > 0 && (

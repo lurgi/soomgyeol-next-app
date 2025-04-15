@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { WorkshopPaginatedResponse } from "@/types/workshop";
+import { Workshop, WorkshopPaginatedResponse } from "@/types/workshop";
 
 const DEFAULT_LIMIT = 10;
 const DEFAULT_RADIUS = 5000;
@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
 
     const latParam = searchParams.get("lat");
     const lngParam = searchParams.get("lng");
+    const radiusParam = searchParams.get("radius");
 
     if (!latParam || !lngParam) {
       return NextResponse.json({ error: "위도(lat)와 경도(lng)는 필수 파라미터입니다." }, { status: 400 });
@@ -18,7 +19,6 @@ export async function GET(request: NextRequest) {
 
     const latitude = parseFloat(latParam);
     const longitude = parseFloat(lngParam);
-    const radiusParam = searchParams.get("radius");
     const radius = radiusParam ? parseInt(radiusParam, 10) : DEFAULT_RADIUS;
 
     const cursor = searchParams.get("cursor");
@@ -28,7 +28,14 @@ export async function GET(request: NextRequest) {
     const rawQuery = `
       WITH nearby_workshops AS (
         SELECT 
-          w.*,
+          w.id,
+          w.title,
+          w.overview,
+          w.image_url,
+          w.locationtext,
+          w.view,
+          w.created_at,
+          w.updated_at,
           ST_Distance(
             w.location::geography, 
             ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography
@@ -52,8 +59,8 @@ export async function GET(request: NextRequest) {
 
     const workshops = await prisma.$queryRawUnsafe(rawQuery, ...queryParams);
 
-    const hasMore = workshops.length > limit;
-    const data = hasMore ? workshops.slice(0, limit) : workshops;
+    const hasMore = (workshops as Workshop[]).length > limit;
+    const data = hasMore ? (workshops as Workshop[]).slice(0, limit) : (workshops as Workshop[]);
 
     const nextCursor = hasMore && data.length > 0 ? data[data.length - 1].id : null;
 

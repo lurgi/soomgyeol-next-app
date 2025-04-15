@@ -9,14 +9,47 @@ interface LocationCoordinates {
   radius: number | null;
 }
 
-export type LocationType = "전체" | "내 근처" | "서울" | "제주";
-export const locations: LocationType[] = ["전체", "내 근처", "서울", "제주"];
+export type LocationType =
+  | "전체"
+  | "내 근처"
+  | "홍대"
+  | "강남"
+  | "잠실"
+  | "시청"
+  | "성수"
+  | "제주시"
+  | "애월"
+  | "서귀포"
+  | "성산";
+
+export const locations: LocationType[] = [
+  "전체",
+  "내 근처",
+  "홍대",
+  "강남",
+  "잠실",
+  "시청",
+  "성수",
+  "제주시",
+  "애월",
+  "서귀포",
+  "성산",
+];
 
 const locationCoordinates: Record<LocationType, LocationCoordinates> = {
   전체: { lat: null, lng: null, radius: null },
-  서울: { lat: 37.5665, lng: 126.978, radius: 15000 },
-  제주: { lat: 33.3595, lng: 126.5346, radius: 50000 },
-  "내 근처": { lat: null, lng: null, radius: 7000 },
+  "내 근처": { lat: null, lng: null, radius: 5000 },
+
+  홍대: { lat: 37.5563, lng: 126.922, radius: 5000 },
+  강남: { lat: 37.4979, lng: 127.0276, radius: 5000 },
+  잠실: { lat: 37.5133, lng: 127.1025, radius: 5000 },
+  시청: { lat: 37.5665, lng: 126.978, radius: 5000 },
+  성수: { lat: 37.5445, lng: 127.0566, radius: 5000 },
+
+  제주시: { lat: 33.5046, lng: 126.4913, radius: 15000 },
+  애월: { lat: 33.333069, lng: 126.320895, radius: 15000 },
+  서귀포: { lat: 33.2541, lng: 126.5618, radius: 15000 },
+  성산: { lat: 33.437569, lng: 126.80629, radius: 15000 },
 };
 
 async function fetchWorkshops(location: LocationType, userCoordinates?: GeolocationCoordinates): Promise<Workshop[]> {

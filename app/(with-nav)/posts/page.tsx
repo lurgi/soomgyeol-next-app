@@ -25,8 +25,8 @@ export default function Posts() {
   const [selectedLocation, setSelectedLocation] = useState<LocationType>("전체");
 
   const handleLocationChange = (location: string) => {
-    if (location === "전체" || location === "내 근처" || location === "서울" || location === "제주") {
-      setSelectedLocation(location);
+    if (locations.includes(location as LocationType)) {
+      setSelectedLocation(location as LocationType);
     }
   };
   const [userCoordinates, setUserCoordinates] = useState<GeolocationCoordinates>();

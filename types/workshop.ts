@@ -4,6 +4,8 @@ export interface Workshop {
   image_url: string | null;
   description: string | null;
   location: { lat: number; lng: number } | null;
+  locationtext: string | null;
+  overview: string | null;
   view: number;
   created_at: Date | null;
   updated_at: Date | null;

@@ -3,7 +3,7 @@ export interface Workshop {
   title: string;
   image_url: string | null;
   description: string | null;
-  location: { lat: number; lng: number } | null;
+  location?: { lat: number; lng: number } | null; // Made optional with ?
   locationtext: string | null;
   overview: string | null;
   view: number;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Workshop, WorkshopPaginatedResponse } from "@/types/workshop";
 
 async function fetchTopWorkshops(): Promise<Workshop[]> {
@@ -19,9 +19,9 @@ async function fetchTopWorkshops(): Promise<Workshop[]> {
 }
 
 export function useTopWorkshops() {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["workshops", "top"],
     queryFn: fetchTopWorkshops,
-    staleTime: 5 * 60 * 1000, // 5분 동안 데이터 캐싱
+    staleTime: 3000,
   });
 }

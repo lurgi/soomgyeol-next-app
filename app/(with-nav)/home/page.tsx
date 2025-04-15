@@ -3,6 +3,9 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import WorkshopCarousel from "./WorkshopCarousel";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import CarouselSkeleton from "../../components/_fallback/CarouselSkeleton";
+import CarouselError from "../../components/_fallback/CarouselError";
 
 interface SubHeaderProps {
   children: React.ReactNode;
@@ -14,9 +17,11 @@ export default function Home() {
     <div className="space-y-6 mt-18 md:mt-8">
       <div className="flex flex-col gap-3 md:gap-5">
         <SubHeader href="/posts?type=workshop">워크샵 / 클래스</SubHeader>
-        <Suspense fallback={<>Loading...</>}>
-          <WorkshopCarousel />
-        </Suspense>
+        <ErrorBoundary fallback={<CarouselError />}>
+          <Suspense fallback={<CarouselSkeleton />}>
+            <WorkshopCarousel />
+          </Suspense>
+        </ErrorBoundary>
       </div>
 
       {/* <div className="flex flex-col gap-4">

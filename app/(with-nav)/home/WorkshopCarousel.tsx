@@ -8,11 +8,7 @@ import { Workshop } from "@/types/workshop";
 export default function WorkshopCarousel() {
   const { data: workshops } = useTopWorkshops();
 
-  if (!workshops || workshops.length === 0) {
-    return <div className="px-6 py-8 text-center">현재 워크샵이 없습니다.</div>;
-  }
-
-  const carouselPosts = workshops.map((workshop: Workshop) => ({
+  const carouselPosts = workshops?.map((workshop: Workshop) => ({
     id: workshop.id,
     image: workshop.image_url || "/yoga1.png",
     title: workshop.title,
@@ -22,5 +18,5 @@ export default function WorkshopCarousel() {
     viewCount: workshop.view || 0,
   }));
 
-  return <Carousel posts={carouselPosts} />;
+  return <Carousel posts={carouselPosts || []} />;
 }

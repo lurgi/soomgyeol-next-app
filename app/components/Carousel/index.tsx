@@ -15,7 +15,6 @@ interface PostData {
   image: string;
   title: string;
   content: string;
-  location: string;
   address: string;
   viewCount: number;
 }
@@ -103,7 +102,6 @@ const Carousel = ({ posts }: CarouselProps) => {
               image={post.image}
               title={post.title}
               content={post.content}
-              location={post.location}
               address={post.address}
               viewCount={post.viewCount}
             />

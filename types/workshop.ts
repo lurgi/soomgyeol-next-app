@@ -7,6 +7,7 @@ export interface Workshop {
   locationtext: string | null;
   overview: string | null;
   view: number;
+  place: string | null;
   created_at: Date | null;
   updated_at: Date | null;
   created_by: string | null;

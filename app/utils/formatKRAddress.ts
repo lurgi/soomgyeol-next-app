@@ -1,6 +1,6 @@
-export function formatKRAddress(raw: string): { address: string; name: string } {
+export function formatKRAddress(raw: string): { address: string } {
   const parts = raw.trim().split(/\s+/);
-  if (parts.length < 2) return { address: raw, name: "" };
+  if (parts.length < 2) return { address: raw };
 
   const isAddressWord = (word: string) => {
     return (
@@ -15,25 +15,17 @@ export function formatKRAddress(raw: string): { address: string; name: string } 
     );
   };
 
-  // 주소 파트와 업체명을 나눔
   const addressParts: string[] = [];
-  let nameStartIndex = parts.length;
 
-  for (let i = 0; i < parts.length; i++) {
+  for (let i = 0; i < 2; i++) {
     if (isAddressWord(parts[i])) {
       addressParts.push(parts[i]);
-    } else {
-      nameStartIndex = i;
-      break;
     }
   }
 
-  const nameParts = parts.slice(nameStartIndex);
   const formattedAddress = addressParts.join(" ");
-  const formattedName = nameParts.join(" ");
 
   return {
     address: formattedAddress,
-    name: formattedName,
   };
 }

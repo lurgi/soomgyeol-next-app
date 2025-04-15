@@ -2,7 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { MapPin, MessageCircle, Heart, Eye, CalendarClock } from "lucide-react";
+import { MapPin, MessageCircle, Heart, Eye, CalendarClock, Building2 } from "lucide-react";
 import { Body, Caption, Heading } from "../font";
 import Link from "next/link";
 import { formatDateToMMDD, formatTimeToKorean, formatDateRange } from "@/app/utils/dateFormat";
@@ -28,7 +28,8 @@ interface SingleDateMetadataProps {
   commentCount?: number;
   likeCount?: number;
   viewCount: number;
-  location: string;
+  location?: string;
+  place?: string;
 }
 
 // Date range event metadata props
@@ -40,7 +41,8 @@ interface DateRangeMetadataProps {
   commentCount?: number;
   likeCount?: number;
   viewCount: number;
-  location: string;
+  location?: string;
+  place?: string;
 }
 
 // Union type for metadata props
@@ -89,11 +91,17 @@ const Metadata = (props: MetadataProps) => {
 
   return (
     <div className="flex justify-between items-end text-slate-500">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         <div className="flex items-center gap-0.5">
           <MapPin size={16} className="flex-shrink-0" />
-          <Body.B2 className="truncate">{props.location}</Body.B2>
+          <Body.B2 className="truncate">{props.location || "위치 정보 없음"}</Body.B2>
         </div>
+        {props.place && (
+          <div className="flex items-center gap-0.5">
+            <Building2 size={16} className="flex-shrink-0" />
+            <Body.B2 className="truncate">{props.place}</Body.B2>
+          </div>
+        )}
         {formattedDateString && (
           <div className="flex items-center gap-0.5">
             <CalendarClock size={16} className="flex-shrink-0" />

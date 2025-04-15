@@ -13,7 +13,6 @@ export default function WorkshopCarousel() {
     image: workshop.image_url || Math.random() < 0.5 ? "/yoga1.png" : "/yoga2.png",
     title: workshop.title,
     content: workshop.overview || "",
-    location: workshop.locationtext ? formatKRAddress(workshop.locationtext).name : "요가원 정보 없음",
     address: workshop.locationtext ? formatKRAddress(workshop.locationtext).address : "위치 정보 없음",
     viewCount: workshop.view || 0,
   }));

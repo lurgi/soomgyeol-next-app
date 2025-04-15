@@ -8,7 +8,6 @@ interface CarouselCardProps {
   image: string;
   title: string;
   content: string;
-  location: string;
   address: string;
   viewCount: number;
   className?: string;
@@ -20,7 +19,6 @@ export default function CarouselCard({
   image,
   title,
   content,
-  location,
   address,
   viewCount,
   className = "",
@@ -46,15 +44,12 @@ export default function CarouselCard({
         <div className="mt-auto flex justify-between items-center">
           <div className="flex items-start gap-1">
             <MapPin className="w-3.5 h-3.5 text-gray-500 mt-1" />
-            <div className="flex flex-col">
-              <Caption.C1 weight="regular" className="text-gray-500">
-                {address}
-              </Caption.C1>
-              <Caption.C1 weight="regular" className="text-gray-500">
-                {location}
-              </Caption.C1>
-            </div>
+
+            <Caption.C1 weight="regular" className="text-gray-500">
+              {address}
+            </Caption.C1>
           </div>
+
           <div className="flex items-center gap-1">
             <Eye className="w-3.5 h-3.5 text-gray-500" />
             <Caption.C1 weight="regular" className="text-gray-500">

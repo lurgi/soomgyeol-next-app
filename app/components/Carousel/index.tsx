@@ -16,6 +16,7 @@ interface PostData {
   title: string;
   content: string;
   location: string;
+  address: string;
   viewCount: number;
 }
 
@@ -27,6 +28,10 @@ const Carousel = ({ posts }: CarouselProps) => {
   return (
     <div className="w-full">
       <style jsx global>{`
+        .swiper-slide {
+          cursor: pointer !important;
+        }
+
         .swiper-pagination {
           position: relative;
           margin-top: 8px;
@@ -94,10 +99,12 @@ const Carousel = ({ posts }: CarouselProps) => {
         {posts.map((post) => (
           <SwiperSlide key={post.id} style={{ width: "240px", height: "auto" }}>
             <CarouselCard
+              id={String(post.id)}
               image={post.image}
               title={post.title}
               content={post.content}
               location={post.location}
+              address={post.address}
               viewCount={post.viewCount}
             />
           </SwiperSlide>

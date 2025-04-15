@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 interface ScrollObserverProps {
-  callback: (entries: IntersectionObserverEntry[]) => void;
+  callback: () => void;
   options?: IntersectionObserverInit;
 }
 
@@ -9,7 +9,12 @@ export default function ScrollObserver({ callback, options }: ScrollObserverProp
   const targetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(callback, options);
+    const observer = new IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        callback();
+      }
+    }, options);
 
     if (targetRef.current) {
       observer.observe(targetRef.current);

@@ -1,7 +1,7 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Workshop, WorkshopPaginatedResponse } from "@/types/workshop";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { WorkshopPaginatedResponse } from "@/types/workshop";
 
 interface LocationCoordinates {
   lat: number | null;
@@ -52,10 +52,15 @@ const locationCoordinates: Record<LocationType, LocationCoordinates> = {
   성산: { lat: 33.437569, lng: 126.80629, radius: 15000 },
 };
 
-async function fetchWorkshops(location: LocationType, userCoordinates?: GeolocationCoordinates): Promise<Workshop[]> {
+async function fetchWorkshops(
+  location: LocationType,
+  userCoordinates?: GeolocationCoordinates,
+  cursor?: string
+): Promise<WorkshopPaginatedResponse> {
   const params = new URLSearchParams();
 
   params.append("limit", "10");
+  if (cursor) params.append("cursor", cursor);
 
   if (location === "전체") {
     const response = await fetch(`/api/workshops?${params}`);
@@ -64,8 +69,7 @@ async function fetchWorkshops(location: LocationType, userCoordinates?: Geolocat
       throw new Error("워크샵 데이터를 불러오는데 실패했습니다.");
     }
 
-    const data: WorkshopPaginatedResponse = await response.json();
-    return data.workshops;
+    return await response.json();
   } else {
     let latitude: number;
     let longitude: number;
@@ -100,15 +104,29 @@ async function fetchWorkshops(location: LocationType, userCoordinates?: Geolocat
       throw new Error("주변 워크샵 데이터를 불러오는데 실패했습니다.");
     }
 
-    const data: WorkshopPaginatedResponse = await response.json();
-    return data.workshops;
+    return await response.json();
   }
 }
 
-export function useWorkshopsQuery(location: LocationType, userCoordinates?: GeolocationCoordinates) {
-  return useSuspenseQuery({
-    queryKey: ["workshops", location, userCoordinates?.latitude, userCoordinates?.longitude],
-    queryFn: () => fetchWorkshops(location, userCoordinates),
+export function useInfiniteWorkshopsQuery(location: LocationType, userCoordinates?: GeolocationCoordinates) {
+  return useInfiniteQuery({
+    queryKey: ["infinite-workshops", location, userCoordinates?.latitude, userCoordinates?.longitude],
+    queryFn: async ({ pageParam }) => {
+      return await fetchWorkshops(location, userCoordinates, pageParam as string);
+    },
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
+}
+
+export function useWorkshopsInfiniteScroll(location: LocationType, userCoordinates?: GeolocationCoordinates) {
+  const query = useInfiniteWorkshopsQuery(location, userCoordinates);
+
+  const workshops = query.data?.pages.flatMap((page) => page.workshops) || [];
+
+  return {
+    workshops,
+    ...query,
+  };
 }

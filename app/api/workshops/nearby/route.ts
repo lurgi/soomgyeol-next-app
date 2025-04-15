@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
           $3
         )
         ${cursor ? `AND w.id > $4` : ""}
-        ORDER BY distance, w.created_at DESC
+        ORDER BY w.created_at DESC
         LIMIT $${cursor ? "5" : "4"}
       )
       SELECT * FROM nearby_workshops

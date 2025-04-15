@@ -1,8 +1,10 @@
 import { Fragment } from "react";
 import PostPreview from "@/app/components/PostPreview";
 import Divider from "@/app/components/Divider";
-import { LocationType, useWorkshopsQuery } from "@/app/hooks/useWorkshopsQuery";
+import { LocationType, useWorkshopsInfiniteScroll } from "@/app/hooks/useWorkshopsQuery";
 import { Body } from "@/app/components/font";
+import ScrollObserver from "@/app/components/ScrollObserver";
+import WorkshopsLoadingSkeleton from "@/app/components/WorkshopsLoadingSkeleton";
 
 interface WorkshopsListProps {
   selectedLocation: LocationType;
@@ -10,7 +12,14 @@ interface WorkshopsListProps {
 }
 
 export default function WorkshopsList({ selectedLocation, userCoordinates }: WorkshopsListProps) {
-  const { data: workshops } = useWorkshopsQuery(selectedLocation, userCoordinates);
+  const { workshops, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useWorkshopsInfiniteScroll(
+    selectedLocation,
+    userCoordinates
+  );
+
+  if (isLoading) {
+    return <WorkshopsLoadingSkeleton />;
+  }
 
   if (workshops.length === 0) {
     return (
@@ -22,9 +31,9 @@ export default function WorkshopsList({ selectedLocation, userCoordinates }: Wor
 
   return (
     <>
-      {workshops?.map((workshop, index) => {
+      {workshops.map((workshop, index) => {
         return (
-          <Fragment key={index}>
+          <Fragment key={workshop.id}>
             {index !== 0 && <Divider />}
             <div className="px-6">
               <PostPreview key={workshop.id} id={workshop.id}>
@@ -47,6 +56,14 @@ export default function WorkshopsList({ selectedLocation, userCoordinates }: Wor
           </Fragment>
         );
       })}
+
+      <ScrollObserver
+        callback={() => {
+          if (hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+          }
+        }}
+      />
     </>
   );
 }

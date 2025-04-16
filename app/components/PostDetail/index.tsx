@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { MapPin, Eye, Calendar, CalendarClock, LucideProps } from "lucide-react";
-import { Body, Heading } from "../font";
-import { formatDateToYYMMDD, formatTimeToKorean } from "@/app/utils/dateFormat";
+import { Eye, LucideProps } from "lucide-react";
+import { Body, Heading, Title } from "../font";
 import Avatar from "../Avatar";
 
 interface DropdownItemProps {
@@ -21,18 +19,9 @@ interface PostDetailProps {
 interface ContentProps {
   title: string;
   description: string;
-  imageUrl: string;
-  imageAlt?: string;
-  author: {
-    name: string;
-    avatar?: string;
-  };
-  dropdownItems: DropdownItemProps[];
 }
 
-interface SingleDateMetadataProps {
-  type: "single";
-  date: Date;
+interface BaseMetadataProps {
   commentCount?: number;
   likeCount?: number;
   viewCount: number;
@@ -41,37 +30,31 @@ interface SingleDateMetadataProps {
   onLikeClick?: () => void;
 }
 
-interface DateRangeMetadataProps {
+interface SingleDateMetadataProps extends BaseMetadataProps {
+  type: "single";
+  date: Date;
+  location?: string;
+}
+
+interface DateRangeMetadataProps extends BaseMetadataProps {
   type: "range";
   startDate: Date;
   endDate: Date;
   daysOfWeek?: string[];
-  commentCount?: number;
-  likeCount?: number;
-  viewCount: number;
   location?: string;
-  isLiked?: boolean;
-  onLikeClick?: () => void;
 }
 
-interface NoDateMetadataProps {
+interface NoDateMetadataProps extends BaseMetadataProps {
   type: "none";
-  commentCount?: number;
-  likeCount?: number;
-  viewCount: number;
-  isLiked?: boolean;
-  onLikeClick?: () => void;
 }
 
 type MetadataProps = SingleDateMetadataProps | DateRangeMetadataProps | NoDateMetadataProps;
 
-const PostDetailHeaderRow = ({
-  author,
-}: // dropdownItems,
-{
-  author: { name: string; avatar?: string };
-  dropdownItems: DropdownItemProps[];
-}) => {
+const PostDetail = ({ className, children }: PostDetailProps) => {
+  return <div className={cn("flex flex-col md:gap-5", className)}>{children}</div>;
+};
+
+const HeaderRow = ({ author }: { author: { name: string; avatar?: string }; dropdownItems?: DropdownItemProps[] }) => {
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -107,26 +90,22 @@ const PostDetailHeaderRow = ({
   );
 };
 
-const PostDetail = ({ className, children }: PostDetailProps) => {
-  return <div className={cn("flex flex-col md:gap-5", className)}>{children}</div>;
+const Image = ({ imageUrl, imageAlt, title }: { imageUrl: string; imageAlt?: string; title: string }) => {
+  return (
+    <div className="relative w-full overflow-hidden sm:rounded-xl max-w-[640px] mx-auto">
+      <img src={imageUrl} alt={imageAlt || title} className="w-full h-full object-fit" />
+    </div>
+  );
 };
 
-const Content = ({ title, description, imageUrl, imageAlt, author, dropdownItems }: ContentProps) => {
+const Content = ({ title, description }: ContentProps) => {
   return (
-    <div className="flex flex-col gap-5 md:gap-8">
-      <div className="relative w-full sm:max-w-[480px] h-[240px] overflow-hidden sm:mx-auto sm:rounded-xl shadow-sm aspect-[4/3]">
-        <Image src={imageUrl} alt={imageAlt || title} fill className="object-cover" />
-      </div>
+    <div className="flex flex-col gap-4 px-6">
+      <Title.T1 weight="medium" className="text-slate-800">
+        {title}
+      </Title.T1>
 
-      <PostDetailHeaderRow author={author} dropdownItems={dropdownItems} />
-
-      <div className="flex flex-col gap-2 px-6">
-        <Heading.H1 weight="medium" className="text-slate-800">
-          {title}
-        </Heading.H1>
-
-        <Body.B1 className="text-slate-800">{description}</Body.B1>
-      </div>
+      <Body.B1 className="text-slate-800 whitespace-pre-line">{description}</Body.B1>
     </div>
   );
 };
@@ -134,7 +113,7 @@ const Content = ({ title, description, imageUrl, imageAlt, author, dropdownItems
 const Metadata = (props: MetadataProps) => {
   return (
     <div className="flex flex-col gap-5 py-4 px-6">
-      {props.type !== "none" && (
+      {/* {props.type !== "none" && (
         <div className="flex flex-col gap-3">
           {props.type === "range" && (
             <div className="flex flex-col">
@@ -170,7 +149,7 @@ const Metadata = (props: MetadataProps) => {
             </div>
           )}
         </div>
-      )}
+      )} */}
 
       <div className="flex items-end justify-between gap-4">
         <div className="flex items-center gap-1">
@@ -206,7 +185,9 @@ const Metadata = (props: MetadataProps) => {
   );
 };
 
+PostDetail.HeaderRow = HeaderRow;
 PostDetail.Content = Content;
 PostDetail.Metadata = Metadata;
+PostDetail.Image = Image;
 
 export default PostDetail;

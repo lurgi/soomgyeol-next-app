@@ -45,7 +45,7 @@ export default function Posts() {
   }, [selectedLocation]);
 
   return (
-    <div className="container mx-auto pt-25.5 md:pt-0">
+    <div className="container mx-auto">
       <Tabs defaultTab={type ? SEARCH_PARAM_TYPE[type] : "워크샵/클래스"}>
         {isMobile ? (
           <MobileLayout.SubHeader>
@@ -76,7 +76,7 @@ export default function Posts() {
           // </div>
         )}
 
-        <Tabs.Content tabId="워크샵/클래스" className="flex flex-col gap-4">
+        <Tabs.Content tabId="워크샵/클래스" className="flex flex-col mt-10 md:mt-0 gap-4">
           <LocationTags tags={locations} defaultSelected="전체" onChange={handleLocationChange} />
 
           <div className="space-y-2.5 md:mt-6">

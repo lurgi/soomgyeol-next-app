@@ -1,72 +1,42 @@
 "use client";
-import MobileLayout from "@/app/components/MobileLayout";
-import PostDetail from "@/app/components/PostDetail";
 
-import { useState } from "react";
-import { Edit3, RotateCw, Trash2 } from "lucide-react";
-import useIsMobile from "@/app/hooks/useIsMobile";
-import Header from "@/app/components/Header";
-import DesktopLayout from "@/app/components/DesktopLayout";
+import PostDetail from "@/app/components/PostDetail";
+// import { Edit3, RotateCw, Trash2 } from "lucide-react";
+import { useParams } from "next/navigation";
+import useWorkshopDetail from "@/app/hooks/useWorkshopDetail";
 
 export default function PostDetailPage() {
-  const isMobile = useIsMobile();
-  return isMobile ? (
-    <MobileLayout>
-      <MobileLayout.Header type="detail" title="" />
-      <MobileLayout.Main>
-        <PostContent />
-      </MobileLayout.Main>
-    </MobileLayout>
-  ) : (
-    <DesktopLayout>
-      <DesktopLayout.Header>
-        <Header />
-      </DesktopLayout.Header>
-      <DesktopLayout.Main>
-        <PostContent />
-      </DesktopLayout.Main>
-    </DesktopLayout>
-  );
-}
+  const params = useParams();
+  const id = params.id as string;
 
-const sampleAuthor = {
-  name: "요기한별",
-  avatar: "/logo.svg",
-};
-
-const sampleDate = new Date(2025, 1, 7, 7, 0);
-const sampleEndDate = new Date(2025, 2, 12, 7, 0);
-
-function PostContent() {
-  const [likeCount, setLikeCount] = useState(42);
+  const { data: workshopDetail } = useWorkshopDetail(id);
 
   const handleLikeClick = () => {
-    setLikeCount((prev) => (prev === 42 ? 43 : 42));
+    console.log("click");
   };
+
   return (
-    <div className="flex flex-col gap-5 pt-12 md:pt-4">
+    <div className="flex flex-col gap-5 sm:mt-8">
       <PostDetail>
+        <PostDetail.Image imageUrl={workshopDetail?.image_url || "/yoga1.png"} title={workshopDetail?.title || ""} />
+        <div className="flex justify-between">
+          <PostDetail.HeaderRow author={{ name: "숨결", avatar: "/logo.svg" }} />
+          <PostDetail.Metadata
+            type="none"
+            viewCount={workshopDetail?.view}
+            location={`${workshopDetail?.locationtext} ${workshopDetail?.place}`}
+            onLikeClick={handleLikeClick}
+          />
+        </div>
         <PostDetail.Content
-          title="주말 오전 하타요가 클래스 대타 강사님 구합니다"
-          description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
-          imageUrl="/yoga2.png"
-          author={sampleAuthor}
-          dropdownItems={[
-            { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-            { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-            { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-          ]}
-        />
-        <PostDetail.Metadata
-          type="range"
-          startDate={sampleDate}
-          endDate={sampleEndDate}
-          daysOfWeek={["월", "수"]}
-          commentCount={12}
-          likeCount={likeCount}
-          viewCount={249}
-          location="서울 마포구 연남동 요가홀"
-          onLikeClick={handleLikeClick}
+          title={workshopDetail?.title || ""}
+          description={workshopDetail?.description || ""}
+
+          // dropdownItems={[
+          //   { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+          //   { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+          //   { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+          // ]}
         />
       </PostDetail>
 

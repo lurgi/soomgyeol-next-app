@@ -15,12 +15,6 @@ const meta: Meta<typeof PostDetail> = {
 export default meta;
 type Story = StoryObj<typeof PostDetail>;
 
-// 샘플 데이터
-const sampleAuthor = {
-  name: "요기한별",
-  avatar: "/logo.svg",
-};
-
 // 정각 시간 예시
 const sampleDate = new Date(2025, 1, 7, 7, 0); // 2025-02-07 07:00
 const sampleEndDate = new Date(2025, 2, 12, 7, 0); // 2025-03-12 07:00
@@ -28,6 +22,13 @@ const sampleEndDate = new Date(2025, 2, 12, 7, 0); // 2025-03-12 07:00
 // 정각이 아닌 시간 예시
 const sampleDateWithMinutes = new Date(2025, 1, 7, 7, 30); // 2025-02-07 07:30
 const sampleEndDateWithMinutes = new Date(2025, 2, 12, 18, 45); // 2025-03-12 18:45
+
+// 샘플 드롭다운 아이템
+const sampleDropdownItems = [
+  { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
+  { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
+  { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
+];
 
 // 기본 PostDetail 스토리
 export const Default: Story = {
@@ -44,13 +45,6 @@ export const Default: Story = {
           <PostDetail.Content
             title="주말 오전 하타요가 클래스 대타 강사님 구합니다"
             description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
-            imageUrl="/yoga2.png"
-            author={sampleAuthor}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
           />
           <PostDetail.Metadata
             type="range"
@@ -84,13 +78,6 @@ export const DateRangeWithMinutes: Story = {
           <PostDetail.Content
             title="저녁 요가 정규 클래스 모집"
             description="직장인을 위한 저녁 요가 클래스입니다. 6주 과정으로 진행됩니다."
-            imageUrl="/yoga2.png"
-            author={sampleAuthor}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
           />
           <PostDetail.Metadata
             type="range"
@@ -113,10 +100,10 @@ export const DateRangeWithMinutes: Story = {
 // 단일 날짜 이벤트 스토리 (정각 시간)
 export const SingleDateEvent: Story = {
   render: function SingleDateEventStory() {
-    const [likeCount, setLikeClick] = useState(27);
+    const [likeCount, setLikeCount] = useState(27);
 
     const handleLikeClick = () => {
-      setLikeClick((prev) => (prev === 27 ? 28 : 27)); // 좋아요 토글 기능
+      setLikeCount((prev) => (prev === 27 ? 28 : 27)); // 좋아요 토글 기능
     };
 
     return (
@@ -125,13 +112,6 @@ export const SingleDateEvent: Story = {
           <PostDetail.Content
             title="일일 명상 워크샵 참가자 모집"
             description="명상을 통한 마음 챙김과 스트레스 해소 방법을 배워봅니다."
-            imageUrl="/yoga2.png"
-            author={sampleAuthor}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
           />
           <PostDetail.Metadata
             type="single"
@@ -161,17 +141,6 @@ export const SingleDateEventWithMinutes: Story = {
     return (
       <div className="max-w-md">
         <PostDetail>
-          <PostDetail.Content
-            title="요가 원데이 클래스"
-            description="초보자도 쉽게 따라할 수 있는 기초 요가 클래스입니다. 편안한 복장으로 오세요."
-            imageUrl="/yoga2.png"
-            author={sampleAuthor}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
-          />
           <PostDetail.Metadata
             type="single"
             date={sampleDateWithMinutes}
@@ -203,15 +172,6 @@ export const NoDatePost: Story = {
           <PostDetail.Content
             title="요가 초보자를 위한 팁"
             description="요가를 처음 시작하는 분들을 위한 유용한 조언들"
-            imageUrl="/yoga2.png"
-            author={{
-              name: "요가마스터",
-            }}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
           />
           <PostDetail.Metadata
             type="none"
@@ -236,13 +196,6 @@ export const ContentOnly: Story = {
           <PostDetail.Content
             title="요가 초보자를 위한 팁"
             description="요가를 처음 시작하는 분들을 위한 유용한 조언들"
-            imageUrl="/yoga2.png"
-            author={sampleAuthor}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
           />
         </PostDetail>
       </div>
@@ -291,16 +244,16 @@ export const NoAuthor: Story = {
     return (
       <div className="max-w-md">
         <PostDetail>
+          <PostDetail.HeaderRow
+            author={{
+              name: "요가마스터",
+            }}
+            dropdownItems={sampleDropdownItems}
+          />
+          <PostDetail.Image imageUrl="/yoga2.png" title="주말 오전 하타요가 클래스 대타 강사님 구합니다" />
           <PostDetail.Content
             title="주말 오전 하타요가 클래스 대타 강사님 구합니다"
             description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
-            imageUrl="/yoga2.png"
-            author={sampleAuthor}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
           />
           <PostDetail.Metadata
             type="range"
@@ -331,18 +284,16 @@ export const AuthorWithoutAvatar: Story = {
     return (
       <div className="max-w-md">
         <PostDetail>
-          <PostDetail.Content
-            title="주말 오전 하타요가 클래스 대타 강사님 구합니다"
-            description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
-            imageUrl="/yoga2.png"
+          <PostDetail.HeaderRow
             author={{
               name: "요가마스터",
             }}
-            dropdownItems={[
-              { label: "수정하기", Icon: Edit3, onClick: () => console.log("수정") },
-              { label: "새로 작성하기", Icon: RotateCw, onClick: () => console.log("새로작성") },
-              { label: "삭제하기", Icon: Trash2, onClick: () => console.log("삭제") },
-            ]}
+            dropdownItems={sampleDropdownItems}
+          />
+          <PostDetail.Image imageUrl="/yoga2.png" title="주말 오전 하타요가 클래스 대타 강사님 구합니다" />
+          <PostDetail.Content
+            title="주말 오전 하타요가 클래스 대타 강사님 구합니다"
+            description="하타요가 수업 대타 강사님을 찾고 있습니다. 1.5시간 수업, 소도구 사용가능하신 분 우대."
           />
           <PostDetail.Metadata
             type="range"

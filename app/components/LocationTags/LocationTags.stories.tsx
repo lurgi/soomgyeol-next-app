@@ -28,14 +28,13 @@ type Story = StoryObj<typeof LocationTags>;
 export const Default: Story = {
   args: {
     tags: ["하타", "서울", "부산", "제주도", "강원도"],
-    defaultSelected: "하타",
+    selected: "하타",
   },
 };
 
 export const MultipleRows: Story = {
   args: {
     tags: ["하타", "서울", "부산", "제주도", "강원도", "인천", "대구", "광주", "울산", "세종"],
-    defaultSelected: "하타",
   },
 };
 
@@ -51,7 +50,7 @@ const SwiperSlideComponent = () => {
         </p>
         <LocationTags
           tags={["하타", "서울", "부산", "제주도", "강원도", "인천", "대구", "광주", "울산", "세종", "대전"]}
-          defaultSelected={selected}
+          selected="하타"
           onChange={setSelected}
         />
       </div>

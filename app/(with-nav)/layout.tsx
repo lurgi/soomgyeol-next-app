@@ -6,6 +6,8 @@ import { NAV_ITEMS, NavItemType } from "@/types/navigation";
 import useIsMobile from "../hooks/useIsMobile";
 import Header from "../components/Header";
 import DesktopLayout from "../components/DesktopLayout";
+import { Suspense } from "react";
+import Loader from "../components/Loader";
 
 export default function Layout({
   children,
@@ -30,7 +32,9 @@ export default function Layout({
       {isMobile ? (
         <MobileLayout>
           <MobileLayout.Header />
-          <MobileLayout.Main>{children}</MobileLayout.Main>
+          <MobileLayout.Main>
+            <Suspense fallback={<Loader />}>{children}</Suspense>
+          </MobileLayout.Main>
           <MobileLayout.Navbar activeItem={activeItem} />
         </MobileLayout>
       ) : (
@@ -38,7 +42,9 @@ export default function Layout({
           <DesktopLayout.Header>
             <Header activeItem={activeItem} />
           </DesktopLayout.Header>
-          <DesktopLayout.Main>{children}</DesktopLayout.Main>
+          <DesktopLayout.Main>
+            <Suspense fallback={<Loader />}>{children}</Suspense>
+          </DesktopLayout.Main>
         </DesktopLayout>
       )}
     </>

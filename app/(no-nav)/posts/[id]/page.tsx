@@ -4,12 +4,44 @@ import PostDetail from "@/app/components/PostDetail";
 // import { Edit3, RotateCw, Trash2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import useWorkshopDetail from "@/app/hooks/useWorkshopDetail";
+import { useEffect } from "react";
 
 export default function PostDetailPage() {
   const params = useParams();
   const id = params.id as string;
 
   const { data: workshopDetail } = useWorkshopDetail(id);
+
+  useEffect(() => {
+    const incrementViewCount = async () => {
+      const viewedPosts = localStorage.getItem("viewedPosts")
+        ? JSON.parse(localStorage.getItem("viewedPosts") || "{}")
+        : {};
+
+      const today = new Date().toISOString().split("T")[0];
+
+      if (!viewedPosts[id] || viewedPosts[id] !== today) {
+        try {
+          const response = await fetch(`/api/workshop/increment-view/${id}`, {
+            method: "POST",
+          });
+
+          if (response.ok) {
+            viewedPosts[id] = today;
+            localStorage.setItem("viewedPosts", JSON.stringify(viewedPosts));
+          }
+        } catch (error) {
+          console.error("조회수 증가 중 오류 발생:", error);
+        }
+      }
+    };
+
+    if (id) {
+      if (typeof window !== "undefined") {
+        incrementViewCount();
+      }
+    }
+  }, [id]);
 
   return (
     <div className="flex flex-col gap-5 sm:mt-8">

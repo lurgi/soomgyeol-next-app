@@ -52,7 +52,7 @@ interface MobileLayoutBottomOverlayProps {
   children: ReactNode;
 }
 
-const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = true }: MobileLayoutHeaderProps) => {
+const MobileLayoutHeader = ({ type = "main", title = "숨결", hasIcons = false }: MobileLayoutHeaderProps) => {
   return (
     <div className="pt-[var(--safe-area-top)]">
       <Header type={type} title={title} hasIcons={hasIcons} />

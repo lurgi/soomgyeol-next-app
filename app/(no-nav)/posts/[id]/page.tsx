@@ -11,10 +11,6 @@ export default function PostDetailPage() {
 
   const { data: workshopDetail } = useWorkshopDetail(id);
 
-  const handleLikeClick = () => {
-    console.log("click");
-  };
-
   return (
     <div className="flex flex-col gap-5 sm:mt-8">
       <PostDetail>
@@ -25,7 +21,7 @@ export default function PostDetailPage() {
             type="none"
             viewCount={workshopDetail?.view}
             location={`${workshopDetail?.locationtext} ${workshopDetail?.place}`}
-            onLikeClick={handleLikeClick}
+            // onLikeClick={handleLikeClick}
           />
         </div>
         <PostDetail.Content

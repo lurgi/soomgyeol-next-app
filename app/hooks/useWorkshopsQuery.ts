@@ -12,11 +12,11 @@ interface LocationCoordinates {
 export type LocationType =
   | "전체"
   | "내 근처"
+  | "성수"
   | "홍대"
   | "강남"
   | "잠실"
   | "시청"
-  | "성수"
   | "제주시"
   | "애월"
   | "서귀포"
@@ -25,11 +25,11 @@ export type LocationType =
 export const locations: LocationType[] = [
   "전체",
   "내 근처",
+  "성수",
   "홍대",
   "강남",
   "잠실",
   "시청",
-  "성수",
   "제주시",
   "애월",
   "서귀포",

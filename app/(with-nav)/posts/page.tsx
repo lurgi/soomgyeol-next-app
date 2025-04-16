@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Tabs from "@/app/components/Tabs";
 import MobileLayout from "@/app/components/MobileLayout";
 import LocationTags from "@/app/components/LocationTags";
@@ -12,6 +12,7 @@ import WorkshopsList from "./WorkshopsList";
 import WorkshopsLoadingSkeleton from "@/app/components/WorkshopsLoadingSkeleton";
 import { ErrorBoundary } from "react-error-boundary";
 import CarouselError from "@/app/components/_fallback/CarouselError";
+import { toast } from "sonner";
 
 export default function Posts() {
   const searchParams = useSearchParams();
@@ -38,7 +39,12 @@ export default function Posts() {
           setUserCoordinates(position.coords);
         },
         (error) => {
-          console.error("위치 정보를 가져오는데 실패했습니다:", error);
+          setSelectedLocation("전체");
+          toast.error("내 위치 정보를 가져오는데 실패했습니다.", {
+            description: error.message,
+            duration: 5000,
+            position: "top-right",
+          });
         }
       );
     }
@@ -77,7 +83,7 @@ export default function Posts() {
         )}
 
         <Tabs.Content tabId="워크샵/클래스" className="flex flex-col mt-10 md:mt-0 gap-4">
-          <LocationTags tags={locations} defaultSelected="전체" onChange={handleLocationChange} />
+          <LocationTags tags={locations} selected={selectedLocation} onChange={handleLocationChange} />
 
           <div className="space-y-2.5 md:mt-6">
             <ErrorBoundary fallback={<CarouselError />}>

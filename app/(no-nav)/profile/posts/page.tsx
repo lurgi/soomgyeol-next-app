@@ -1,11 +1,13 @@
 "use client";
 
 import { Body } from "@/app/components/font";
+import Loader from "@/app/components/Loader";
 import MobileLayout from "@/app/components/MobileLayout";
 import PostLightPreview from "@/app/components/PostLightPreview";
 import Tabs from "@/app/components/Tabs";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const samplePosts = [
   {
@@ -76,7 +78,9 @@ export default function MyPostsPage() {
     <MobileLayout>
       <MobileLayout.Header title="" type="detail" hasIcons={true} />
       <MobileLayout.Main>
-        <MyPosts />
+        <Suspense fallback={<Loader />}>
+          <MyPosts />
+        </Suspense>
       </MobileLayout.Main>
     </MobileLayout>
   );

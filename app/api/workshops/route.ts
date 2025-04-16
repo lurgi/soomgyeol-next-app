@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
         cursor: {
           id: cursor,
         },
+        skip: 1,
       }),
       orderBy: {
         created_at: "desc",

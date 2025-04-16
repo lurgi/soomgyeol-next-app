@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
           ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography,
           $3
         )
-        ${cursor ? `AND w.id > $4` : ""}
+        ${cursor ? `AND w.id < $4` : ""}
         ORDER BY w.created_at DESC
         LIMIT $${cursor ? "5" : "4"}
       )

@@ -4,10 +4,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Workshop, WorkshopPaginatedResponse } from "@/types/workshop";
 
 async function fetchTopWorkshops(): Promise<Workshop[]> {
-  if (typeof window === "undefined") {
-    throw new Error("window is undefined");
-  }
-
   const baseUrl = window.location.origin;
   const url = `${baseUrl}/api/workshops`;
   const params = new URLSearchParams();

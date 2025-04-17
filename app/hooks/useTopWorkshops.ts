@@ -4,6 +4,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Workshop, WorkshopPaginatedResponse } from "@/types/workshop";
 
 async function fetchTopWorkshops(): Promise<Workshop[]> {
+  // Skip data fetching during server-side rendering
+  if (typeof window === "undefined") {
+    return [];
+  }
+
   const baseUrl = window.location.origin;
   const url = `${baseUrl}/api/workshops`;
   const params = new URLSearchParams();
@@ -19,7 +24,7 @@ async function fetchTopWorkshops(): Promise<Workshop[]> {
     const data: WorkshopPaginatedResponse = await response.json();
     return data.workshops;
   } catch (error) {
-    throw new Error(`워크샵 데이터 로딩 오류: ${error}`);
+    throw new Error(`워크샵 데이터를 불러오는데 실패했습니다. ${error}`);
   }
 }
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import QueryProvider from "./providers/QueryProvider";
+import { Toaster } from "sonner";
 
 const notoSansKr = Noto_Sans_KR({
   weight: ["400", "500", "700"],
@@ -21,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${notoSansKr.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${notoSansKr.variable} font-sans antialiased`}>
+        <Toaster />
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }

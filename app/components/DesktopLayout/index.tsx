@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactNode, Suspense } from "react";
-import Loader from "../Loader";
+import { ReactNode } from "react";
 
 interface DesktopLayoutProps {
   children: ReactNode;
@@ -16,11 +15,7 @@ function DesktopLayoutHeader({ children }: { children: ReactNode }) {
 }
 
 function DesktopLayoutMain({ children }: { children: ReactNode }) {
-  return (
-    <Suspense fallback={<Loader />}>
-      <main className="w-full max-w-3xl">{children}</main>
-    </Suspense>
-  );
+  return <main className="w-full max-w-3xl">{children}</main>;
 }
 
 const DesktopLayout = Object.assign(DesktopLayoutRoot, {

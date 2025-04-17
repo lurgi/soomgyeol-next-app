@@ -1,7 +1,7 @@
 "use client";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import useKakaoMapsScript from "@/app/components/FindPlace/useKakaoMapScript";
-import ScrollObserver from "../ScrollObserver";
+// import ScrollObserver from "../ScrollObserver";
 import useKakaoCafeSearch from "./useKakaoSerach";
 import Loader from "../Loader";
 
@@ -13,9 +13,9 @@ export default function FindPlace({ onSearch }: CafeSearchProps) {
   const { isLoading: isScriptLoading, kakaoPlace } = useKakaoMapsScript();
   console.log(isScriptLoading, kakaoPlace);
   const [searchValue, setSearchValue] = useState("");
-  const rootRef = useRef<HTMLDivElement>(null);
+  // const rootRef = useRef<HTMLDivElement>(null);
 
-  const { searchData, isSearchLoading, hasNextPage, fetchFirstSearchData, fetchNextSearchData } = useKakaoCafeSearch();
+  const { searchData, isSearchLoading, hasNextPage, fetchFirstSearchData } = useKakaoCafeSearch();
   const isFirstSearchLoading = !hasNextPage && isSearchLoading;
 
   const handleSearch = useCallback(
@@ -28,11 +28,11 @@ export default function FindPlace({ onSearch }: CafeSearchProps) {
     [isScriptLoading, kakaoPlace, fetchFirstSearchData]
   );
 
-  const observeSearchNextPageCallback = (entries: IntersectionObserverEntry[]) => {
-    const isValidIntersecting = entries[0].isIntersecting && hasNextPage && kakaoPlace;
-    if (!isValidIntersecting) return;
-    fetchNextSearchData(kakaoPlace, searchValue);
-  };
+  // const observeSearchNextPageCallback = (entries: IntersectionObserverEntry[]) => {
+  //   const isValidIntersecting = entries[0].isIntersecting && hasNextPage && kakaoPlace;
+  //   if (!isValidIntersecting) return;
+  //   fetchNextSearchData(kakaoPlace, searchValue);
+  // };
 
   return (
     <div>
@@ -62,18 +62,18 @@ export default function FindPlace({ onSearch }: CafeSearchProps) {
           ))
         )}
 
-        {hasNextPage && (
+        {/* {hasNextPage && (
           <div className="flex justify-center items-center py-10">
             {isSearchLoading ? (
               <Loader />
             ) : (
-              <ScrollObserver
-                callback={observeSearchNextPageCallback}
+              // <ScrollObserver
+              //   callback={() => observeSearchNextPageCallback()}
                 options={{ root: rootRef.current, rootMargin: "200px", threshold: 0 }}
               />
             )}
-          </div>
-        )}
+          </div> */}
+        {/* )} */}
       </div>
     </div>
   );

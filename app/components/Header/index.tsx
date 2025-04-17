@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { Search, Bell, ChevronLeft } from "lucide-react";
-import { Heading, Title } from "../font";
+import { Body, Title } from "../font";
 import Link from "next/link";
 import { NAV_ITEMS, NavItemType } from "@/types/navigation";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type HeaderType = "main" | "detail";
 
@@ -14,15 +15,16 @@ interface HeaderProps {
   hasIcons?: boolean;
 }
 
-export default function Header({ activeItem, type = "main", title = "숨결", hasIcons = true }: HeaderProps) {
+export default function Header({ activeItem, type = "main", title = "숨결", hasIcons = false }: HeaderProps) {
+  const router = useRouter();
   return (
-    <header className="w-full py-[10px] px-[16px] bg-background md:py-5 md:px-8  md:border-b md:border-slate-200">
+    <header className="w-full py-[10px] px-[16px] bg-background  md:border-b md:border-slate-200">
       <div className="w-full flex justify-between items-center">
         {/* Left Section */}
         <div className="flex items-center gap-3 md:hidden">
           {type === "main" && <Image src="/logo.svg" alt="숨결 로고" width={29} height={40} className="mr-1" />}
           {type === "detail" && (
-            <button aria-label="뒤로가기" className="ml-[-8px]">
+            <button aria-label="뒤로가기" className="ml-[-8px] hover:cursor-pointer" onClick={() => router.back()}>
               <ChevronLeft width={40} height={40} />
             </button>
           )}
@@ -74,9 +76,12 @@ function Navbar({ activeItem }: NavbarProps) {
       <div className="flex justify-between items-center">
         {navItems.map((item) => (
           <Link key={item.type} href={"/" + item.type.toLowerCase()}>
-            <Heading.H2 className={cn("text-slate-500", activeItem === item.type && "text-slate-800 underline")}>
+            <Body.B2
+              weight="medium"
+              className={cn("text-slate-500", activeItem === item.type && "text-slate-800 underline")}
+            >
               {item.label}
-            </Heading.H2>
+            </Body.B2>
           </Link>
         ))}
       </div>

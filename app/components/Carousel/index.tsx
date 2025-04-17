@@ -9,13 +9,14 @@ import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import useIsMobile from "@/app/hooks/useIsMobile";
 
 interface PostData {
   id: string | number;
   image: string;
   title: string;
   content: string;
-  location: string;
+  address: string;
   viewCount: number;
 }
 
@@ -24,9 +25,15 @@ interface CarouselProps {
 }
 
 const Carousel = ({ posts }: CarouselProps) => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="w-full">
       <style jsx global>{`
+        .swiper-slide {
+          cursor: pointer !important;
+        }
+
         .swiper-pagination {
           position: relative;
           margin-top: 8px;
@@ -60,6 +67,12 @@ const Carousel = ({ posts }: CarouselProps) => {
           display: flex;
           align-items: center;
           justify-content: center;
+          transition: background-color 0.3s ease;
+          opacity: 0.8;
+
+          &:hover {
+            background-color: var(--color-blue-200);
+          }
         }
 
         .swiper-button-next:after,
@@ -81,8 +94,8 @@ const Carousel = ({ posts }: CarouselProps) => {
         spaceBetween={10}
         slidesPerView={"auto"}
         centeredSlides={false}
-        slidesOffsetBefore={16}
-        slidesOffsetAfter={16}
+        slidesOffsetBefore={isMobile ? 16 : 52}
+        slidesOffsetAfter={isMobile ? 16 : 52}
         pagination={{
           clickable: true,
           dynamicBullets: false,
@@ -94,10 +107,11 @@ const Carousel = ({ posts }: CarouselProps) => {
         {posts.map((post) => (
           <SwiperSlide key={post.id} style={{ width: "240px", height: "auto" }}>
             <CarouselCard
+              id={String(post.id)}
               image={post.image}
               title={post.title}
               content={post.content}
-              location={post.location}
+              address={post.address}
               viewCount={post.viewCount}
             />
           </SwiperSlide>

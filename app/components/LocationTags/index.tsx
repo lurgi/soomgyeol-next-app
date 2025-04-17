@@ -40,24 +40,16 @@ export const LocationTag: React.FC<LocationTagProps> = ({ label, isSelected = fa
 
 interface LocationTagsProps {
   tags: string[];
-  defaultSelected?: string;
+  selected?: string;
   onChange?: (selected: string) => void;
   className?: string;
 }
 
-const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onChange, className }) => {
-  const [selectedTag, setSelectedTag] = useState<string>(defaultSelected || "");
+const LocationTags: React.FC<LocationTagsProps> = ({ tags, selected, onChange, className }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [previousExpanded, setPreviousExpanded] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
-
-  const handleTagClick = (tag: string) => {
-    setSelectedTag(tag);
-    if (onChange) {
-      onChange(tag);
-    }
-  };
 
   const toggleExpand = () => {
     setPreviousExpanded(expanded);
@@ -67,7 +59,7 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
   useEffect(() => {
     if (previousExpanded && !expanded && swiperRef.current) {
       const swiper = swiperRef.current;
-      const selectedIndex = tags.findIndex((tag) => tag === selectedTag);
+      const selectedIndex = tags.findIndex((tag) => tag === selected);
 
       if (selectedIndex >= 0) {
         setTimeout(() => {
@@ -80,7 +72,7 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
         }, 50);
       }
     }
-  }, [expanded, previousExpanded, selectedTag, tags]);
+  }, [expanded, previousExpanded, selected, tags]);
 
   return (
     <div className={cn("relative w-full", className)} ref={containerRef}>
@@ -103,7 +95,7 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
           >
             {tags.map((tag) => (
               <SwiperSlide key={tag} className="!w-auto">
-                <LocationTag label={tag} isSelected={selectedTag === tag} onClick={() => handleTagClick(tag)} />
+                <LocationTag label={tag} isSelected={selected === tag} onClick={() => onChange?.(tag)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -112,7 +104,7 @@ const LocationTags: React.FC<LocationTagsProps> = ({ tags, defaultSelected, onCh
         {expanded && (
           <div className="pr-10 px-2 bg-white flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <LocationTag key={tag} label={tag} isSelected={selectedTag === tag} onClick={() => handleTagClick(tag)} />
+              <LocationTag key={tag} label={tag} isSelected={selected === tag} onClick={() => onChange?.(tag)} />
             ))}
           </div>
         )}
